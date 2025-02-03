@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+cine_gestion_sala,cine_gestion_sala,cine_gestion.model_cine_gestion_sala,base.group_user,1,1,1,1
+cine_gestion_asiento,cine_gestion_asiento,cine_gestion.model_cine_gestion_asiento,base.group_user,1,1,1,1
