@@ -2,7 +2,7 @@
 
 ### Nombre del módulo
 
-_cine\_gestion\
+_cine\_gestion
 
 ### Descripción corta
 
