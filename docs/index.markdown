@@ -2,7 +2,7 @@
 
 ### Nombre del módulo
 
-_cine\_gestion\_sesiones_
+_cine\_gestion\
 
 ### Descripción corta
 
