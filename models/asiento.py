@@ -13,9 +13,3 @@ class Asiento(models.Model):
         ('ESP', 'Butaca especial'),
         ], string="Tipo", default='NORM', required=True)
     sala_id = fields.Many2one('cine_gestion.sala', string="Sala")
-
-    """@api.depends("filas", "columnas")
-    def _capacidad_total(self):
-        for record in self:
-            record.capacidad = record.filas * record.columnas"""
-    #1 sala tiene relacion con 0 o varias sesiones
