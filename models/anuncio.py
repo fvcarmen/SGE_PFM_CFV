@@ -3,6 +3,7 @@ from odoo import api, models, fields
 class Anuncio(models.Model):
     _name = "cine_gestion.anuncio"
     _description = "Anuncios"
+    name = fields.Char(string="Nombre")
     duracion = fields.Integer(string="Duración (min)", help="Duración en minutos", required=True, default='0')
     pegi = fields.Selection([
         ('DESC', 'Desconocido'),
