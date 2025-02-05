@@ -8,6 +8,18 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record id="cine_gestion.anuncio_action" model="ir.actions.act_window">
+            <field name="name">Anuncios</field>
+            <field name="res_model">cine_gestion.anuncio</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cine_gestion.genero_action" model="ir.actions.act_window">
+            <field name="name">Géneros</field>
+            <field name="res_model">cine_gestion.genero</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <record id="cine_gestion.asiento_action" model="ir.actions.act_window">
             <field name="name">Asientos</field>
             <field name="res_model">cine_gestion.asiento</field>
@@ -18,9 +30,14 @@
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
 
         <!--Menú infraestructura-->
-        <menuitem id="cine_gestion.infraestructura_menu" name="Infraestructura" parent="cine_gestion.menu_root" sequence="1"/>
+        <menuitem id="cine_gestion.infraestructura_menu" name="Infraestructura" parent="cine_gestion.menu_root" sequence="10"/>
         <menuitem id="cine_gestion.sala_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.sala_action"/>
         <menuitem id="cine_gestion.asiento_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.asiento_action"/>
-        <!---->
+        
+        <!--Menú audiovisual-->
+        <menuitem id="cine_gestion.audiovisual_menu" name="Audiovisual" parent="cine_gestion.menu_root" sequence="1"/>
+        <menuitem id="cine_gestion.anuncio_menu" parent="cine_gestion.audiovisual_menu" action="cine_gestion.anuncio_action"/>
+        <menuitem id="cine_gestion.genero_menu" parent="cine_gestion.audiovisual_menu" action="cine_gestion.genero_action"/>
+    
     </data>
 </odoo>
