@@ -2,7 +2,7 @@
     <data>
 
         <!--ACCIONES-->
-        
+
         <record id="cine_gestion.sala_action" model="ir.actions.act_window">
             <field name="name">Salas</field>
             <field name="res_model">cine_gestion.sala</field>
@@ -39,6 +39,18 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record id="cine_gestion.evento_action" model="ir.actions.act_window">
+            <field name="name">Eventos</field>
+            <field name="res_model">cine_gestion.evento</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cine_gestion.kdm_action" model="ir.actions.act_window">
+            <field name="name">KDMs</field>
+            <field name="res_model">cine_gestion.kdm</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <!--MENÚS-->
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
 
@@ -50,6 +62,9 @@
         <!--Menú audiovisual-->
         <menuitem id="cine_gestion.audiovisual_menu" name="Audiovisual" parent="cine_gestion.menu_root" sequence="1"/>
         <menuitem id="cine_gestion.anuncio_menu" parent="cine_gestion.audiovisual_menu" action="cine_gestion.anuncio_action"/>
+        <menuitem id="cine_gestion.evento_menu" name="Evento" parent="cine_gestion.audiovisual_menu" sequence="2"/>
+        <menuitem id="cine_gestion.evento_submenu" parent="cine_gestion.evento_menu" action="cine_gestion.evento_action"/>
+        <menuitem id="cine_gestion.kdm_menu" parent="cine_gestion.evento_menu" action="cine_gestion.kdm_action"/>
         <menuitem id="cine_gestion.genero_menu" parent="cine_gestion.audiovisual_menu" action="cine_gestion.genero_action"/>
     
         <!--Menú finanzas-->

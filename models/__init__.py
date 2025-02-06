@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# from . import evento
+from . import evento
 from . import sala
-# from . import kdm
+from . import kdm
 from . import anuncio
 # from . import sesion
 from . import genero
