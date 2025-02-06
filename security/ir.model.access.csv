@@ -3,3 +3,5 @@ cine_gestion_sala,cine_gestion_sala,cine_gestion.model_cine_gestion_sala,base.gr
 cine_gestion_asiento,cine_gestion_asiento,cine_gestion.model_cine_gestion_asiento,base.group_user,1,1,1,1
 cine_gestion_anuncio,cine_gestion_anuncio,cine_gestion.model_cine_gestion_anuncio,base.group_user,1,1,1,1
 cine_gestion_genero,cine_gestion_genero,cine_gestion.model_cine_gestion_genero,base.group_user,1,1,1,1
+cine_gestion_descuento,cine_gestion_descuento,cine_gestion.model_cine_gestion_descuento,base.group_user,1,1,1,1
+cine_gestion_tarifa,cine_gestion_tarifa,cine_gestion.model_cine_gestion_tarifa,base.group_user,1,1,1,1

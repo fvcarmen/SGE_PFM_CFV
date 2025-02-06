@@ -2,6 +2,7 @@
     <data>
 
         <!--ACCIONES-->
+        
         <record id="cine_gestion.sala_action" model="ir.actions.act_window">
             <field name="name">Salas</field>
             <field name="res_model">cine_gestion.sala</field>
@@ -26,6 +27,18 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record id="cine_gestion.tarifa_action" model="ir.actions.act_window">
+            <field name="name">Tarifas</field>
+            <field name="res_model">cine_gestion.tarifa</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cine_gestion.descuento_action" model="ir.actions.act_window">
+            <field name="name">Descuentos</field>
+            <field name="res_model">cine_gestion.descuento</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <!--MENÚS-->
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
 
@@ -39,5 +52,9 @@
         <menuitem id="cine_gestion.anuncio_menu" parent="cine_gestion.audiovisual_menu" action="cine_gestion.anuncio_action"/>
         <menuitem id="cine_gestion.genero_menu" parent="cine_gestion.audiovisual_menu" action="cine_gestion.genero_action"/>
     
+        <!--Menú finanzas-->
+        <menuitem id="cine_gestion.finanzas_menu" name="Finanzas" parent="cine_gestion.menu_root" sequence="20"/>
+        <menuitem id="cine_gestion.tarifa_menu" parent="cine_gestion.finanzas_menu" action="cine_gestion.tarifa_action"/>
+        <menuitem id="cine_gestion.descuento_menu" parent="cine_gestion.finanzas_menu" action="cine_gestion.descuento_action"/>
     </data>
 </odoo>

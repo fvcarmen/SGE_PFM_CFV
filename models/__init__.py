@@ -6,7 +6,7 @@ from . import sala
 from . import anuncio
 # from . import sesion
 from . import genero
-# from . import tarifa
-# from . import descuento
+from . import tarifa
+from . import descuento
 from . import asiento
 #from . import tickets
