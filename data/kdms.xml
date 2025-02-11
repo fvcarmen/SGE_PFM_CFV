@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <record model="cine_gestion.kdm" id="cine_gestion.kdm_la_comunidad_del_anillo">
+            <field name="name">4654321987A91</field>
+            <field name="vencimiento">2025-12-12</field>
+            <field name="evento_id" ref="cine_gestion.evento_la_comunidad_del_anillo"/>
+        </record>
+    </data>
+</odoo>
