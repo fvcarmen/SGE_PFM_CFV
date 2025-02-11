@@ -4,7 +4,7 @@ class Asiento(models.Model):
     _name = "cine_gestion.asiento"
     _description = "Asientos de sala"
 
-    name = fields.Char("Nombre", required=True)
+    name = fields.Char("Nombre")
     fila =  fields.Integer("Fila", required=True)
     columna =  fields.Integer("Columna", required=True)
     tipo = fields.Selection([

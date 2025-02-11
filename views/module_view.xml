@@ -50,6 +50,11 @@
             <field name="res_model">cine_gestion.kdm</field>
             <field name="view_mode">tree,form</field>
         </record>
+        <record id="cine_gestion.sesion_action" model="ir.actions.act_window">
+            <field name="name">Sesiones</field>
+            <field name="res_model">cine_gestion.sesion</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
         <!--MENÚS-->
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
@@ -57,6 +62,7 @@
         <!--Menú infraestructura-->
         <menuitem id="cine_gestion.infraestructura_menu" name="Infraestructura" parent="cine_gestion.menu_root" sequence="10"/>
         <menuitem id="cine_gestion.sala_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.sala_action"/>
+        <menuitem id="cine_gestion.sesiones_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.sesion_action"/>
         <menuitem id="cine_gestion.asiento_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.asiento_action"/>
         
         <!--Menú audiovisual-->

@@ -7,3 +7,4 @@ cine_gestion_descuento,cine_gestion_descuento,cine_gestion.model_cine_gestion_de
 cine_gestion_tarifa,cine_gestion_tarifa,cine_gestion.model_cine_gestion_tarifa,base.group_user,1,1,1,1
 cine_gestion_evento,cine_gestion_evento,cine_gestion.model_cine_gestion_evento,base.group_user,1,1,1,1
 cine_gestion_kdm,cine_gestion_kdm,cine_gestion.model_cine_gestion_kdm,base.group_user,1,1,1,1
+cine_gestion_sesion,cine_gestion_sesion,cine_gestion.model_cine_gestion_sesion,base.group_user,1,1,1,1

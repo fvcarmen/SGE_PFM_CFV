@@ -10,6 +10,10 @@
     'data': [
         'security/ir.model.access.csv',
         'views/module_view.xml',
+        'data/salas.xml',
+        'data/generos.xml',
+        'data/anuncios.xml',
+        'data/cine_gestion.asiento.csv',
         #'views/anuncios_views.xml',
         #'views/descuentos_views.xml',
         #'views/eventos_views.xml',

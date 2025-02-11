@@ -15,4 +15,4 @@ class Anuncio(models.Model):
         ('18', 'No recomendada para menores de 18 años'),
         ], string="PEGI", default='DESC', required=True)
     genero_id = fields.Many2one('cine_gestion.genero', string="Género")
-    #sesion_asignada = fields.Many2many('sesiones', string"Sesiones")
+    sesiones_ids = fields.Many2many('cine_gestion.sesion', string="Sesiones")
