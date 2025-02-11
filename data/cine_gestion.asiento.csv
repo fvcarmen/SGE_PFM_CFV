@@ -1,0 +1,3 @@
+id,fila,columna,tipo,sala_id:id
+cine_gestion.asiento_1,1,1,NORM,cine_gestion.sala_1
+cine_gestion.asiento_2,1,2,NORM,cine_gestion.sala_1

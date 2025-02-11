@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <record model="cine_gestion.genero" id="cine_gestion.genero_accion">
+            <field name="name">Acción</field>
+            <field name="preferencia_horaria">False</field>
+        </record>
+    </data>
+</odoo>

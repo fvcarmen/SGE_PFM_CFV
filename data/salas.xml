@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <record model="cine_gestion.sala" id="cine_gestion.sala_1">
+            <field name="name"> Sala 1 </field>
+            <field name="filas">12</field>
+            <field name="columnas">12</field>
+        </record>
+    </data>
+</odoo>

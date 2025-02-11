@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record model="cine_gestion.anuncio" id="cine_gestion.anuncio_pascual">
+            <field name="name"> Anuncio Pascual </field>
+            <field name="duracion">10</field>
+            <field name="pegi">7</field>
+            <field name="genero_id" ref="cine_gestion.genero_accion"/>        
+        </record>
+    </data>
+</odoo>
