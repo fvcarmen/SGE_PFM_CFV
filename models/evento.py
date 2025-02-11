@@ -39,12 +39,15 @@ class Evento(models.Model):
     
     generos_ids = fields.Many2many(
         'cine_gestion.genero',
-        'tabla_evento_genero',
-        'evento_id', 'genero_id',
         string="Género",
         required=True
     )
-    
+    sesiones_ids = fields.One2many(
+        'cine_gestion.sesion',
+        'evento_id',
+        string="Sesiones"
+    )
+
     
 
     """recaudacion_total = fields.Float(string="Recaudación Total", help="Ingresos generados")

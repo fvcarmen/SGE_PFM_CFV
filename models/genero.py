@@ -7,6 +7,11 @@ class Genero(models.Model):
     name = fields.Char(string="Nombre", required=True)  
     preferencia_horaria = fields.Boolean(string="Preferencia horaria")
     anuncios_ids = fields.One2many('cine_gestion.anuncio', 'genero_id', string="Anuncio")
+    eventos_ids = fields.Many2many(
+        'cine_gestion.evento',
+        string="Evento",
+    )
+
 
     _sql_constraints = [
         ('unique_name','unique(name)','El nombre del género debe ser único.')

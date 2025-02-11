@@ -13,6 +13,8 @@
         'data/salas.xml',
         'data/generos.xml',
         'data/anuncios.xml',
+        'data/eventos.xml',
+        'data/kdms.xml',
         'data/cine_gestion.asiento.csv',
         #'views/anuncios_views.xml',
         #'views/descuentos_views.xml',
