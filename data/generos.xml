@@ -1,5 +1,8 @@
 <odoo>
     <data>
+        <record model="cine_gestion.genero" id="cine_gestion.genero_anuncio_generico">
+            <field name="name">Anuncio Genérico</field>
+        </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_accion">
             <field name="name">Acción</field>
         </record>

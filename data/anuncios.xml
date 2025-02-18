@@ -6,5 +6,17 @@
             <field name="pegi">7</field>
             <field name="genero_id" ref="cine_gestion.genero_accion"/>        
         </record>
+        <record model="cine_gestion.anuncio" id="cine_gestion.anuncio_el_viaje_de_chihiro">
+            <field name="name"> El Viaje de Chihiro </field>
+            <field name="duracion">3</field>
+            <field name="pegi">tp</field>
+            <field name="genero_id" ref="cine_gestion.genero_accion"/>        
+        </record>
+        <record model="cine_gestion.anuncio" id="cine_gestion.anuncio_pascual">
+            <field name="name"> Anuncio Pascual </field>
+            <field name="duracion">10</field>
+            <field name="pegi">7</field>
+            <field name="genero_id" ref="cine_gestion.genero_accion"/>        
+        </record>
     </data>
 </odoo>

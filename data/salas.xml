@@ -17,8 +17,8 @@
         </record>
         <record model="cine_gestion.sala" id="cine_gestion.sala_4">
             <field name="name"> Sala 4 </field>
-            <field name="filas">16</field>
-            <field name="columnas">16</field>
+            <field name="filas">9</field>
+            <field name="columnas">9</field>
         </record>
         <record model="cine_gestion.sala" id="cine_gestion.sala_5">
             <field name="name"> Sala 5 </field>
@@ -47,8 +47,8 @@
         </record>
         <record model="cine_gestion.sala" id="cine_gestion.sala_10">
             <field name="name"> Sala 10 </field>
-            <field name="filas">12</field>
-            <field name="columnas">12</field>
+            <field name="filas">18</field>
+            <field name="columnas">18</field>
         </record>
         <record model="cine_gestion.sala" id="cine_gestion.sala_11">
             <field name="name"> Sala 11 </field>
