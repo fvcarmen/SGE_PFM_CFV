@@ -5,7 +5,7 @@ class Genero(models.Model):
     _description = 'Género de contenido audiovisual'
 
     name = fields.Char(string="Nombre", required=True)  
-    preferencia_horaria = fields.Boolean(string="Preferencia horaria")
+    preferencia_horaria = fields.Boolean(string="Preferencia horaria", default=False)
     anuncios_ids = fields.One2many('cine_gestion.anuncio', 'genero_id', string="Anuncio")
     eventos_ids = fields.Many2many(
         'cine_gestion.evento',
