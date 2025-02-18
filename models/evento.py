@@ -5,6 +5,7 @@ class Evento(models.Model):
     _description = "Eventos de Cine"
 
     name = fields.Char(string="Título", required=True)
+    imagen = fields.Image(string="Imagen")
     es_pelicula = fields.Boolean(
         string="¿Se va a proyectar una película?",
         default=True
@@ -13,7 +14,6 @@ class Evento(models.Model):
     estado = fields.Boolean(string="Estado", default=True)
     duracion = fields.Integer(string="Duración (min)", help="Duración en minutos", required=True)
     distribuidora = fields.Char(string="Distribuidora", required=True)
-
     kdms_ids = fields.One2many(
         'cine_gestion.kdm',
         'evento_id',

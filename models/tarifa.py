@@ -7,3 +7,4 @@ class Tarifas(models.Model):
     name = fields.Char(string="Nombre", required=True)
     precio = fields.Float(string="Precio", required=True)
     descuentos_ids = fields.One2many('cine_gestion.descuento', 'tarifa_id', string="Descuentos")
+    sesiones_ids = fields.One2many('cine_gestion.sesion', 'tarifa_id', string = "Sesiones")

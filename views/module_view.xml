@@ -56,6 +56,14 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <!--record id="generar_sesiones_action" model="ir.actions.act_window">
+            <field name="name">Generación Automática de Sesiones</field>
+            <field name="res_model">cine_gestion.wizard_generate_sessions</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            
+        </record-->
+
         <!--MENÚS-->
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
 
