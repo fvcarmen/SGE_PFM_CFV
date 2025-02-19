@@ -7,7 +7,7 @@ class Anuncio(models.Model):
     duracion = fields.Integer(string="Duración (min)", help="Duración en minutos", required=True, default='0')
     pegi = fields.Selection([
         ('DESC', 'Desconocido'),
-        ('tp', 'Todos los públicos'), 
+        ('0', 'Todos los públicos'), 
         ('7', 'No recomendada para menores de 7 años'), 
         ('10', 'No recomendada para menores de 10 años'),
         ('13', 'No recomendada para menores de 13 años'),
