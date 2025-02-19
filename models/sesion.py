@@ -4,10 +4,10 @@ class Sesion(models.Model):
     _name = "cine_gestion.sesion"
     _description = "Sesiones de Cine"
     
-    name = fields.Char(string="Nombre")
+    name = fields.Char(string="Nombre", compute="_compute_session_name")
     fecha_inicio = fields.Datetime(string="Fecha de Inicio", required=True)
-    fecha_fin = fields.Datetime(string="Fecha de Fin", required=True)
-    evento_id = fields.Many2one('sesiones_ids', string="Evento", required=True)
+    fecha_fin = fields.Datetime(string="Fecha de Fin", compute="_compute_fecha_fin", required=True)
+    evento_id = fields.Many2one('cine_gestion.evento', string="Evento", required=True)
     duracion = fields.Integer(string="Duración (min)", compute="_compute_duracion", store=True)
     ocupacion = fields.Integer(string="Ocupación", default=0)
     anuncios_ids = fields.Many2many('cine_gestion.anuncio', string="Anuncios")
@@ -18,7 +18,7 @@ class Sesion(models.Model):
         required=True
         )
     tarifa_id = fields.Many2one('cine_gestion.tarifa', string="Tarifa")
-
+    #función para calcular la duración de la sesión
     @api.depends('anuncios_ids', 'evento_id')
     def _compute_duracion(self):
         for sesion in self:
@@ -26,8 +26,18 @@ class Sesion(models.Model):
             for anuncio in sesion.anuncios_ids:
                 duracion = duracion + anuncio.duracion
             sesion.duracion = duracion
-
-    @api.depends()
+    
+    #función para calcular el nombre de la sesión
+    @api.depends('fecha_inicio', 'evento_id', 'sala_id')
+    def _compute_session_name(self):
+        for sesion in self:
+            if sesion.fecha_inicio and sesion.evento_id and sesion.sala_id:
+                sesion.name=f"{sesion.sala_id.name}: {sesion.evento_id.name} del {sesion.fecha_inicio}"
+            else:
+                sesion.name="Sesión por Asignar"
+    
+    #función para calcular la fecha fin de la sesión
+    @api.depends('fecha_inicio', 'duracion')
     def _compute_fecha_fin(self):
         for sesion in self:
             if sesion.fecha_inicio and sesion.duracion:
