@@ -10,7 +10,7 @@ class Sala(models.Model):
     capacidad = fields.Integer("Capacidad", compute="_capacidad_total")
     tipo = fields.Char("Tipo de sala", compute="_compute_size")
     asientos_ids = fields.One2many('cine_gestion.asiento', 'sala_id', string="Asientos")
-    sesiones_ids = fields.One2many                                                                                                                                                                                                                                                                  ('cine_gestion.sesion', 'sala_id', string="Sesiones")
+    sesiones_ids = fields.One2many('cine_gestion.sesion', 'sala_id', string="Sesiones")
 
 
     @api.depends("filas", "columnas")
