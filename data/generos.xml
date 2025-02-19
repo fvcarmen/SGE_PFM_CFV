@@ -14,7 +14,6 @@
         </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_infantil">
             <field name="name">Infantil</field>
-            <field name="preferencia_horaria">True</field>
         </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_comedia">
             <field name="name">Comedia</field>
@@ -24,11 +23,9 @@
         </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_terror">
             <field name="name">Terror</field>
-            <field name="preferencia_horaria">True</field>
         </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_gore">
             <field name="name">Gore</field>
-            <field name="preferencia_horaria">True</field>
         </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_musical">
             <field name="name">Musical</field>
@@ -38,7 +35,6 @@
         </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_documental">
             <field name="name">Documental</field>
-            <field name="preferencia_horaria">True</field>
         </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_ciencia_ficcion">
             <field name="name">Ciencia Ficción</field>
