@@ -55,7 +55,7 @@
             <field name="res_model">cine_gestion.sesion</field>
             <field name="view_mode">tree,form</field>
         </record>
-
+        <!--wizard action-->
         <record id="cine_gestion.generar_sesiones_action" model="ir.actions.act_window">
             <field name="name">Generación Automática de Sesiones</field>
             <field name="res_model">cine_gestion.wizard_generate_sessions</field>
