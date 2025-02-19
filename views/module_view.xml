@@ -56,13 +56,13 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!--record id="generar_sesiones_action" model="ir.actions.act_window">
+        <record id="cine_gestion.generar_sesiones_action" model="ir.actions.act_window">
             <field name="name">Generación Automática de Sesiones</field>
             <field name="res_model">cine_gestion.wizard_generate_sessions</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
             
-        </record-->
+        </record>
 
         <!--MENÚS-->
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
@@ -70,7 +70,9 @@
         <!--Menú infraestructura-->
         <menuitem id="cine_gestion.infraestructura_menu" name="Infraestructura" parent="cine_gestion.menu_root" sequence="10"/>
         <menuitem id="cine_gestion.sala_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.sala_action"/>
-        <menuitem id="cine_gestion.sesiones_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.sesion_action"/>
+        <menuitem id="cine_gestion.sesiones_menu" name = "Gestión Sesiones" parent="cine_gestion.infraestructura_menu" sequence="3"/>
+        <menuitem id="cine_gestion.action_sesiones_menu" parent="cine_gestion.sesiones_menu" action="cine_gestion.sesion_action"/>
+        <menuitem id="cine_gestion.generar_sesiones_menu" parent="cine_gestion.sesiones_menu" action="cine_gestion.generar_sesiones_action"/>
         <menuitem id="cine_gestion.asiento_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.asiento_action"/>
         
         <!--Menú audiovisual-->
