@@ -1,8 +1,5 @@
 <odoo>
     <data>
-
-        <!--ACCIONES-->
-
         <record id="cine_gestion.sala_action" model="ir.actions.act_window">
             <field name="name">Salas</field>
             <field name="res_model">cine_gestion.sala</field>
@@ -55,15 +52,36 @@
             <field name="res_model">cine_gestion.sesion</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <!--wizard action-->
+        <!--Acción wizard generar sesiones -->
         <record id="cine_gestion.generar_sesiones_action" model="ir.actions.act_window">
-            <field name="name">Generación Automática de Sesiones</field>
+            <field name="name">Generar Sesiones</field>
             <field name="res_model">cine_gestion.wizard_generate_sessions</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-            
+        </record>
+        <!--Vista formulario del wizard-->
+        <record id="cine_gestion.wizard_generate_sessions_form" model="ir.ui.view">
+            <field name="name">wizard.generate.sessions.form</field>
+            <field name="model">cine_gestion.wizard_generate_sessions</field>
+            <field name="arch" type="xml">
+                <form string="Generar Sesiones">
+                    <group>
+                        <field name="fecha_inicio" required="1"/>
+                        <field name="fecha_final" required="1"/>
+                        <field name="listado_eventos" widget="many2many_tags"/>
+                        <field name="listado_anuncios" widget="many2many_tags"/>
+                        <field name="listado_salas" widget="many2many_tags"/>
+                        <field name="listado_tarifas" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="generate_sessions" string="Generar Sesiones" type="object" class="btn-primary"/>
+                        <button string="Cancelar" special="cancel" class="btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
         </record>
 
+    
         <!--MENÚS-->
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
 

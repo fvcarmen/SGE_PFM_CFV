@@ -11,7 +11,7 @@ class Evento(models.Model):
         default=True
     )
     descripcion = fields.Text(string="Descripción")
-    estado = fields.Boolean(string="Estado", default=True)
+    activo = fields.Boolean(string="Activo", default=True)
     duracion = fields.Integer(string="Duración (min)", help="Duración en minutos", required=True)
     distribuidora = fields.Char(string="Distribuidora", required=True)
     kdms_ids = fields.One2many(

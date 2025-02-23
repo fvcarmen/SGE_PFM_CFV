@@ -5,6 +5,7 @@ class Anuncio(models.Model):
     _description = "Anuncios"
     name = fields.Char(string="Nombre")
     duracion = fields.Integer(string="Duración (min)", help="Duración en minutos", required=True, default='0')
+    activo = fields.Boolean(string="Activo", default=True)
     pegi = fields.Selection([
         ('DESC', 'Desconocido'),
         ('0', 'Todos los públicos'), 
