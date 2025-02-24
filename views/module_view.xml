@@ -68,6 +68,8 @@
                     <group>
                         <field name="fecha_inicio" required="1"/>
                         <field name="fecha_final" required="1"/>
+                        <field name="hora_inicio" required="1"/>
+                        <field name="hora_final" required="1"/>
                         <field name="listado_eventos" widget="many2many_tags"/>
                         <field name="listado_anuncios" widget="many2many_tags"/>
                         <field name="listado_salas" widget="many2many_tags"/>
