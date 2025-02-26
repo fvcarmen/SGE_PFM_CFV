@@ -18,6 +18,9 @@ class Sesion(models.Model):
         required=True
         )
     tarifa_id = fields.Many2one('cine_gestion.tarifa', string="Tarifa")
+    #vista lista que aparezca ya agrupada por grupos (día y luego salas) 
+    #que muestre la hora fin, la duración, la ocupación y la tarifa (correo)
+    
     #función para calcular la duración de la sesión
     @api.depends('anuncios_ids', 'evento_id')
     def _compute_duracion(self):
