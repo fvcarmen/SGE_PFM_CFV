@@ -11,11 +11,11 @@ class Evento(models.Model):
         default=True
     )
     descripcion = fields.Text(string="Descripción")
-    prioridad = fields.fields.Selection(
+    """prioridad = fields.Selection(
         [
             #5-0 <field name="progression" widget="selection_badge"/>
         ], readonly=True,string="Prioridad"
-    )
+    )"""
     activo = fields.Boolean(string="Activo", default=True)
     duracion = fields.Integer(string="Duración (min)", help="Duración en minutos", required=True)
     distribuidora = fields.Char(string="Distribuidora", required=True)

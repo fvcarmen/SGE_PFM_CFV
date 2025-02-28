@@ -40,10 +40,10 @@ class WizardGenerateSessions(models.TransientModel):
         for record in self:
             dias_con_tarifa = []
             for tarifa in record.listado_tarifas:
-                if tarifa.dia_valido in dias_con_tarifa:
-                    raise UserError(f"Ya existe una tarifa con el código {tarifa.dia_valido}. No se permiten tarifas duplicadas para el mismo día." )
-                dias_con_tarifa.append(tarifa.dia_valido)
-                if tarifa.dia_valido == -1:
+                if tarifa.dia_tarifa in dias_con_tarifa:
+                    raise UserError(f"Ya existe una tarifa con el código {tarifa.dia_tarifa}. No se permiten tarifas duplicadas para el mismo día." )
+                dias_con_tarifa.append(tarifa.dia_tarifa)
+                if tarifa.dia_tarifa == -1:
                     valor_default = True
             if not valor_default:
                 raise UserError("Para evitar fallos de generación de sesiones, asigna al menos una tarifa con el valor -1")
@@ -75,17 +75,21 @@ class WizardGenerateSessions(models.TransientModel):
         fecha_final_generacion = datetime.combine(self.fecha_final, time(hora_final, minuto_final))
         fecha_sesion = datetime.combine(self.fecha_inicio, time(hora_inicio, minuto_inicio))
 
-        eventos_pendientes = self.listado_eventos[:] #lista todos los eventos con la que trabajaremos
+        duracion_max_eventos = max(self.listado_eventos, key=lambda e: e.duracion)
+        duracion_max_anuncios = sum(anuncio.duracion for anuncio in self.listado_anuncios)
+        duracion_maxima = duracion_max_eventos.duracion + duracion_max_anuncios
 
-        while fecha_sesion <= (fecha_final_generacion + timedelta(minutes=duracion)):
+        eventos_pendientes = list(self.listado_eventos)
+
+        while fecha_sesion <= (fecha_final_generacion + timedelta(minutes=duracion_maxima)):
             if fecha_sesion.hour < hora_inicio or fecha_sesion.hour > hora_final:
                 fecha_sesion = fecha_sesion.replace(hour=hora_inicio, minute=minuto_inicio, second=0) + timedelta(days=1)
                 continue
             for sala in self.listado_salas:
                 if not eventos_pendientes:
-                    eventos_pendientes = self.listado_eventos[:] #reinicia lista
-
-                evento = eventos_pendientes.pop(0)  # Extrae el primer evento de la lista
+                    eventos_pendientes = list(self.listado_eventos)#reinicia lista
+                    
+                evento = eventos_pendientes.pop(0)
                 #campos de la sesión concreta
                 duracion_anuncios = sum(anuncio.duracion for anuncio in self.listado_anuncios)
                 duracion = evento.duracion + duracion_anuncios
@@ -112,11 +116,6 @@ class WizardGenerateSessions(models.TransientModel):
                         'tarifa_id': tarifa
                     })
 
-                espacio_restante = (fecha_sesion.replace(hour=hora_final, minute=minuto_final) - fecha_fin).total_seconds() / 60
-
-                if espacio_restante > 0 :
-                    eventos_pendientes.insert(0, evento)
-
                 fecha_sesion += timedelta(minutes=duracion+20)
 
     def obtener_tarifa(self, fecha_sesion):
@@ -128,6 +127,10 @@ class WizardGenerateSessions(models.TransientModel):
         # Si no hay tarifa para hoy, buscamos la del día anterior (-1)
         if tarifa is None:
             tarifa = next((tarifa for tarifa in self.listado_tarifas if tarifa.dia_tarifa == - 1), None)
+
+
+        if tarifa is None:
+            raise UserError("No se encontró una tarifa válida para la fecha seleccionada.")
 
         return tarifa.id
     
