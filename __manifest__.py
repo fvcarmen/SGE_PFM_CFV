@@ -2,7 +2,7 @@
     'name': "Cine Gestión",
     'version': '1.0',
     'summary': "Gestión de Sesiones y Salas de Cine",
-    'author': "Your Name",
+    'author': "Carmen Fernández",
     'category': 'Uncategorized',
     'depends': [
         'base',

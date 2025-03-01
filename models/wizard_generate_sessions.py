@@ -17,9 +17,21 @@ class WizardGenerateSessions(models.TransientModel):
         string='Eventos',
         domain="[('activo','=', True)]",
     )
-    listado_anuncios = fields.Many2many('cine_gestion.anuncio', string="Anuncios")
-    listado_salas = fields.Many2many('cine_gestion.sala', string="Salas")
-    listado_tarifas = fields.Many2many('cine_gestion.tarifa', string="Tarifas")
+    listado_anuncios = fields.Many2many(
+        'cine_gestion.anuncio',
+        string="Anuncios",
+        domain="[('activo','=', True)]",
+    )
+    listado_salas = fields.Many2many(
+        'cine_gestion.sala',
+        string="Salas",
+        domain="[('activo','=', True)]",
+    )
+    listado_tarifas = fields.Many2many(
+        'cine_gestion.tarifa',
+        string="Tarifas",
+        domain="[('activo','=', True)]",
+    )
     #prioridades, informes, tener en cuenta h.
     #cuando creas un evento nuevo crear propiedad (5-0)que sea estreno crone
     #generar informe x día x sala las sesiones que van
@@ -70,21 +82,22 @@ class WizardGenerateSessions(models.TransientModel):
         hora_final = int(self.hora_final) 
         minuto_final = int((self.hora_final - hora_final) * 60)
 
-        fecha_final_generacion = datetime.combine(self.fecha_final, time(hora_final, minuto_final))
-        fecha_sesion = datetime.combine(self.fecha_inicio, time(hora_inicio, minuto_inicio))
-
         duracion_max_eventos = max(self.listado_eventos, key=lambda evento: evento.duracion)
         duracion_max_anuncios = sum(anuncio.duracion for anuncio in self.listado_anuncios)
         duracion_maxima = duracion_max_eventos.duracion + duracion_max_anuncios
-
+        fecha_final_generacion = datetime.combine(self.fecha_final, time(hora_final, minuto_final))
+        fecha_sesion = datetime.combine(self.fecha_inicio, time(hora_inicio, minuto_inicio))
         eventos_ordenados = sorted(self.listado_eventos, key=lambda evento: int(evento.prioridad), reverse=True)
         eventos_pendientes_ordenados = list(eventos_ordenados)
         salas_ordenadas = sorted(self.listado_salas, key=lambda s: s.capacidad, reverse=True)
-        while fecha_sesion <= (fecha_final_generacion + timedelta(minutes=duracion_maxima)):
-            if fecha_sesion.hour < hora_inicio or fecha_sesion.hour > hora_final:
-                fecha_sesion = fecha_sesion.replace(hour=hora_inicio, minute=minuto_inicio, second=0) + timedelta(days=1)
-                continue
-            for sala in self.listado_salas:
+        for sala in salas_ordenadas:
+            fecha_sesion_actual = fecha_sesion  #reinicia para cada sala
+
+            while fecha_sesion_actual <= fecha_final_generacion:
+                if fecha_sesion_actual.hour < hora_inicio or fecha_sesion_actual.hour > hora_final:
+                    fecha_sesion_actual = fecha_sesion_actual.replace(hour=hora_inicio, minute=minuto_inicio, second=0) + timedelta(days=1)
+                    continue
+
                 if not eventos_pendientes_ordenados:
                     eventos_pendientes_ordenados = list(self.listado_eventos)#reinicia lista
                 
@@ -99,30 +112,29 @@ class WizardGenerateSessions(models.TransientModel):
 
                 duracion_anuncios = sum(anuncio.duracion for anuncio in listado_anuncios_evento)
                 duracion = evento.duracion + duracion_anuncios
-                tarifa = self.obtener_tarifa(fecha_sesion)
-                fecha_fin = fecha_sesion + timedelta(minutes=duracion)
+                tarifa = self.obtener_tarifa(fecha_sesion_actual)
+                fecha_fin = fecha_sesion_actual + timedelta(minutes=duracion)
                 
                 sesion_existente = self.env['cine_gestion.sesion'].search([
                     ('sala_id', '=', sala.id),
                     ('fecha_inicio', '<', fecha_fin),
-                    ('fecha_fin', '>', fecha_sesion)
+                    ('fecha_fin', '>', fecha_sesion_actual)
                 ])
                 sesion_solapada= self.env['cine_gestion.sesion'].search([
                     ('evento_id', '=', evento.id),
-                    ('fecha_inicio', '=', fecha_sesion),
+                    ('fecha_inicio', '=', fecha_sesion_actual),
                     ('fecha_fin', '=', fecha_fin),
                 ])
                 if len(sesion_existente) == 0 and not sesion_solapada:
                     self.env['cine_gestion.sesion'].create({
-                        'fecha_inicio': fecha_sesion,
+                        'fecha_inicio': fecha_sesion_actual,
                         'fecha_fin': fecha_fin,
                         'evento_id': evento.id,
                         'anuncios_ids': [(6, 0, [anuncio.id for anuncio in listado_anuncios_evento])],
                         'sala_id': sala.id,
                         'tarifa_id': tarifa
                     })
-
-                fecha_sesion += timedelta(minutes=duracion+20)
+                fecha_sesion_actual += timedelta(minutes=duracion+20)
 
     def obtener_tarifa(self, fecha_sesion):
         dia_tarifa = fecha_sesion.weekday()

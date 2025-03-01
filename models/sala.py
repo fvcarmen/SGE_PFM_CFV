@@ -11,7 +11,7 @@ class Sala(models.Model):
     tipo = fields.Char("Tipo de sala", compute="_compute_size")
     asientos_ids = fields.One2many('cine_gestion.asiento', 'sala_id', string="Asientos")
     sesiones_ids = fields.One2many('cine_gestion.sesion', 'sala_id', string="Sesiones")
-
+    activo = fields.Boolean(string="Activo", default=True)
 
     @api.depends("filas", "columnas")
     def _capacidad_total(self):

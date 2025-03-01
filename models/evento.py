@@ -48,9 +48,7 @@ class Evento(models.Model):
         default='desconocido',
         required=True
     )
-
     dcp = fields.Boolean(string="Formato DCP", default=False)
-    
     generos_ids = fields.Many2many(
         'cine_gestion.genero',
         string="Género",

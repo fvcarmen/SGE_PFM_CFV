@@ -47,11 +47,7 @@
             <field name="res_model">cine_gestion.kdm</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <record id="cine_gestion.sesion_action" model="ir.actions.act_window">
-            <field name="name">Sesiones</field>
-            <field name="res_model">cine_gestion.sesion</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+
         <!--Acción wizard generar sesiones -->
         <record id="cine_gestion.generar_sesiones_action" model="ir.actions.act_window">
             <field name="name">Generar Sesiones</field>
@@ -59,6 +55,7 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+
         <!--Vista formulario del wizard-->
         <record id="cine_gestion.wizard_generate_sessions_form" model="ir.ui.view">
             <field name="name">wizard.generate.sessions.form</field>
@@ -82,6 +79,47 @@
                 </form>
             </field>
         </record>
+        <!-- Vista formulario de las sesiones-->
+        <record id="cine_gestion.sesion_search" model="ir.ui.view">
+            <field name="name">Búsqueda sesiones</field>
+            <field name="model">cine_gestion.sesion</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand="0" string="Agrupar">
+                        <filter name="group_by_month" string="Fecha(mes)" context="{'group_by': 'fecha_inicio'}"/>
+                        <filter name="group_by_day" string="Fecha(día)" context="{'group_by': 'fecha_inicio:day'}"/>
+                        <filter name="group_by_sala" string="Sala" context="{'group_by': 'sala_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="cine_gestion.sesion_tree" model="ir.ui.view">
+            <field name="name">Lista de sesiones</field>
+            <field name="model">cine_gestion.sesion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="sala_id"/>
+                    <field name="evento_id"/>
+                    <field name="fecha_inicio"/>
+                    <field name="fecha_fin"/>
+                    <field name="duracion"/>
+                    <field name="ocupacion"/>
+                    <field name="tarifa_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cine_gestion.action_sesion" model="ir.actions.act_window">
+            <field name="name">Sesiones</field>
+            <field name="res_model">cine_gestion.sesion</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="cine_gestion.sesion_tree"/>
+            <field name="search_view_id" ref="cine_gestion.sesion_search"/>
+            <field name="context">{'search_default_group_by_month': 1, 'search_default_group_by_day': 1, 'search_default_group_by_sala': 1}</field>
+        </record>
+
 
     
         <!--MENÚS-->
@@ -91,7 +129,7 @@
         <menuitem id="cine_gestion.infraestructura_menu" name="Infraestructura" parent="cine_gestion.menu_root" sequence="10"/>
         <menuitem id="cine_gestion.sala_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.sala_action"/>
         <menuitem id="cine_gestion.sesiones_menu" name = "Gestión Sesiones" parent="cine_gestion.infraestructura_menu" sequence="3"/>
-        <menuitem id="cine_gestion.action_sesiones_menu" parent="cine_gestion.sesiones_menu" action="cine_gestion.sesion_action"/>
+        <menuitem id="cine_gestion.action_sesiones_menu" parent="cine_gestion.sesiones_menu" action="cine_gestion.action_sesion"/>
         <menuitem id="cine_gestion.generar_sesiones_menu" parent="cine_gestion.sesiones_menu" action="cine_gestion.generar_sesiones_action"/>
         <menuitem id="cine_gestion.asiento_menu" parent="cine_gestion.infraestructura_menu" action="cine_gestion.asiento_action"/>
         

@@ -13,8 +13,6 @@ class Genero(models.Model):
         string="Evento",
     )
 
-    
-
     _sql_constraints = [
         ('unique_name','unique(name)','El nombre del género debe ser único.')
     ]

@@ -4,13 +4,14 @@ class Sesion(models.Model):
     _name = "cine_gestion.sesion"
     _description = "Sesiones de Cine"
     
-    name = fields.Char(string="Nombre", compute="_compute_session_name", store = True)
-    fecha_inicio = fields.Datetime(string="Fecha de Inicio", required=True)
+    name = fields.Char(string="Nombre", compute="_compute_session_name", store=True)
+    fecha_inicio = fields.Datetime(string="Fecha de Inicio", required=True, store=True)
     fecha_fin = fields.Datetime(string="Fecha de Fin", compute="_compute_fecha_fin", required=True, store = True)
     evento_id = fields.Many2one('cine_gestion.evento', string="Evento", required=True)
     duracion = fields.Integer(string="Duración (min)", compute="_compute_duracion", store=True)
     ocupacion = fields.Integer(string="Ocupación", default=0)
     anuncios_ids = fields.Many2many('cine_gestion.anuncio', string="Anuncios")
+    activo = fields.Boolean(string="Activo", default=True)
     sala_id = fields.Many2one(
         'cine_gestion.sala',
         string="Sala",
