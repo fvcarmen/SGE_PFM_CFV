@@ -9,6 +9,9 @@
         <record model="cine_gestion.genero" id="cine_gestion.genero_drama">
             <field name="name">Drama</field>
         </record>
+        <record model="cine_gestion.genero" id="cine_gestion.genero_aventura">
+            <field name="name">Aventura</field>
+        </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_animacion">
             <field name="name">Animación</field>
         </record>
@@ -38,6 +41,9 @@
         </record>
         <record model="cine_gestion.genero" id="cine_gestion.genero_ciencia_ficcion">
             <field name="name">Ciencia Ficción</field>
+        </record>
+        <record model="cine_gestion.genero" id="cine_gestion.genero_fantasia">
+            <field name="name">Fantasia</field>
         </record>
     </data>
 </odoo>

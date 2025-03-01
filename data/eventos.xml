@@ -9,7 +9,62 @@
             <field name="duracion">183</field>
             <field name="pegi">13</field>
             <field name="dcp">True</field>
-            <field name="generos_ids" eval="[(6,0,[ref('cine_gestion.genero_accion')])]"/>
+            <field name="generos_ids" eval="[(6,0,[ref('cine_gestion.genero_accion', 'cine_gestion.genero_fantasia')])]"/>
+        </record>
+        <record model="cine_gestion.evento" id="cine_gestion.evento_guerra_de_los_mundos">
+            <field name="name">La Guerra de los Mundos</field>
+            <field name="es_pelicula">True</field>
+            <field name="descripcion">En un futuro cercano, la humanidad se enfrenta a una invasión extraterrestre. La lucha por la supervivencia desencadena una guerra sin cuartel entre humanos y alienígenas.</field>
+            <field name="distribuidora">Warner Bros</field>
+            <field name="activo">True</field>
+            <field name="duracion">145</field>
+            <field name="pegi">16</field>
+            <field name="dcp">True</field>
+            <field name="generos_ids" eval="[(6, 0, [ref('cine_gestion.genero_accion'), ref('cine_gestion.genero_ciencia_ficcion')])]"/>
+        </record>
+        <record model="cine_gestion.evento" id="cine_gestion.evento_el_viaje_infinito">
+            <field name="name">El Viaje Infinito</field>
+            <field name="es_pelicula">True</field>
+            <field name="descripcion">Un aventurero emprende un viaje épico a través de dimensiones desconocidas, descubriendo mundos paralelos y secretos ocultos en el cosmos.</field>
+            <field name="distribuidora">20th Century Fox</field>
+            <field name="activo">True</field>
+            <field name="duracion">132</field>
+            <field name="pegi">13</field>
+            <field name="dcp">True</field>
+            <field name="generos_ids" eval="[(6, 0, [ref('cine_gestion.genero_aventura'), ref('cine_gestion.genero_fantasia')])]"/>
+        </record>
+        <record model="cine_gestion.evento" id="cine_gestion.evento_el_misterio_del_abismo">
+            <field name="name">El Misterio del Abismo</field>
+            <field name="es_pelicula">True</field>
+            <field name="descripcion">Un grupo de científicos se adentra en las profundidades del océano para investigar una anomalía que podría cambiar el curso de la humanidad.</field>
+            <field name="distribuidora">Paramount Pictures</field>
+            <field name="activo">True</field>
+            <field name="duracion">118</field>
+            <field name="pegi">13</field>
+            <field name="dcp">False</field>
+            <field name="generos_ids" eval="[(6, 0, [ref('cine_gestion.genero_misterio'), ref('cine_gestion.genero_aventura')])]"/>
+        </record>
+        <record model="cine_gestion.evento" id="cine_gestion.evento_sombras_de_la_noche">
+            <field name="name">Sombras de la Noche</field>
+            <field name="es_pelicula">True</field>
+            <field name="descripcion">Una intrigante historia de suspense en la que un detective debe resolver un misterio rodeado de engaños y oscuros secretos durante una noche interminable.</field>
+            <field name="distribuidora">Columbia Pictures</field>
+            <field name="activo">True</field>
+            <field name="duracion">130</field>
+            <field name="pegi">18</field>
+            <field name="dcp">False</field>
+            <field name="generos_ids" eval="[(6, 0, [ref('cine_gestion.genero_misterio'), ref('cine_gestion.genero_drama')])]"/>
+        </record>
+        <record model="cine_gestion.evento" id="cine_gestion.evento_la_ultima_esperanza">
+            <field name="name">La Última Esperanza</field>
+            <field name="es_pelicula">True</field>
+            <field name="descripcion">En un mundo al borde del colapso, un grupo de héroes se une para salvar a la humanidad en una lucha épica contra fuerzas oscuras.</field>
+            <field name="distribuidora">20th Century Fox</field>
+            <field name="activo">True</field>
+            <field name="duracion">160</field>
+            <field name="pegi">18</field>
+            <field name="dcp">True</field>
+            <field name="generos_ids" eval="[(6, 0, [ref('cine_gestion.genero_accion'), ref('cine_gestion.genero_drama')])]"/>
         </record>
     </data>
 </odoo>

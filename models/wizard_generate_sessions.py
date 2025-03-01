@@ -79,7 +79,7 @@ class WizardGenerateSessions(models.TransientModel):
 
         eventos_ordenados = sorted(self.listado_eventos, key=lambda evento: int(evento.prioridad), reverse=True)
         eventos_pendientes_ordenados = list(eventos_ordenados)
-
+        salas_ordenadas = sorted(self.listado_salas, key=lambda s: s.capacidad, reverse=True)
         while fecha_sesion <= (fecha_final_generacion + timedelta(minutes=duracion_maxima)):
             if fecha_sesion.hour < hora_inicio or fecha_sesion.hour > hora_final:
                 fecha_sesion = fecha_sesion.replace(hour=hora_inicio, minute=minuto_inicio, second=0) + timedelta(days=1)
@@ -93,11 +93,9 @@ class WizardGenerateSessions(models.TransientModel):
                 for anuncio in self.listado_anuncios:
                     if anuncio.genero_id.name == "Comercial":
                         listado_anuncios_evento.append(anuncio)
-                    elif anuncio.genero_id in evento.genero_id:
+                    elif anuncio.genero_id in evento.generos_ids:
                         if anuncio.pegi <= evento.pegi:
                             listado_anuncios_evento.append(anuncio)
-                        else:
-                            raise UserWarning(f"Anuncio {anuncio.name} no puede asignarse automáticamente a este evento por PEGI")
 
                 duracion_anuncios = sum(anuncio.duracion for anuncio in listado_anuncios_evento)
                 duracion = evento.duracion + duracion_anuncios
@@ -119,7 +117,7 @@ class WizardGenerateSessions(models.TransientModel):
                         'fecha_inicio': fecha_sesion,
                         'fecha_fin': fecha_fin,
                         'evento_id': evento.id,
-                        'anuncios_ids': [(6, 0, listado_anuncios_evento.ids)],
+                        'anuncios_ids': [(6, 0, [anuncio.id for anuncio in listado_anuncios_evento])],
                         'sala_id': sala.id,
                         'tarifa_id': tarifa
                     })

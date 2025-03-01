@@ -12,11 +12,29 @@
             <field name="pegi">0</field>
             <field name="genero_id" ref="cine_gestion.genero_animacion"/>        
         </record>
+        <record model="cine_gestion.anuncio" id="cine_gestion.anuncio_star_wars_1">
+            <field name="name"> Star Wars: Episodio I - La amenaza fantasma </field>
+            <field name="duracion">4</field>
+            <field name="pegi">13</field>
+            <field name="genero_id" ref="cine_gestion.genero_ciencia_ficcion"/>        
+        </record>
         <record model="cine_gestion.anuncio" id="cine_gestion.anuncio_tartas">
             <field name="name"> Anuncio Tartas </field>
             <field name="duracion">10</field>
             <field name="pegi">7</field>
             <field name="genero_id" ref="cine_gestion.genero_comercial"/>        
+        </record>
+        <record model="cine_gestion.anuncio" id="cine_gestion.anuncio_expedicion_aventura">
+            <field name="name">Expedición Aventura</field>
+            <field name="duracion">8</field>
+            <field name="pegi">18</field>
+            <field name="genero_id" ref="cine_gestion.genero_aventura"/>
+        </record>
+        <record model="cine_gestion.anuncio" id="cine_gestion.anuncio_drama_experiencia">
+            <field name="name">Drama Experiencia</field>
+            <field name="duracion">2</field>
+            <field name="pegi">16</field>
+            <field name="genero_id" ref="cine_gestion.genero_drama"/>
         </record>
     </data>
 </odoo>
