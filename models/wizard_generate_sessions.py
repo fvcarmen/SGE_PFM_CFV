@@ -94,7 +94,7 @@ class WizardGenerateSessions(models.TransientModel):
                     if anuncio.genero_id.name == "Comercial":
                         listado_anuncios_evento.append(anuncio)
                     elif anuncio.genero_id in evento.genero_id:
-                        if anuncio.pegi == evento.pegi:
+                        if anuncio.pegi <= evento.pegi:
                             listado_anuncios_evento.append(anuncio)
                         else:
                             raise UserWarning(f"Anuncio {anuncio.name} no puede asignarse automáticamente a este evento por PEGI")
