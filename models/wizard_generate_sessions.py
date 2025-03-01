@@ -47,8 +47,8 @@ class WizardGenerateSessions(models.TransientModel):
                     valor_default = True
             if not valor_default:
                 raise UserError("Para evitar fallos de generación de sesiones, asigna al menos una tarifa con el valor -1")
-            
-
+    
+       
     def generate_sessions(self):
         self.ensure_one()
         if not self.fecha_inicio or not self.fecha_final:
@@ -63,9 +63,7 @@ class WizardGenerateSessions(models.TransientModel):
             raise UserError("Debes seleccionar al menos una sala para la generación de sesiones.")
         if not self.listado_tarifas:
             raise UserError("Debes seleccionar al menos una tarifa válida para proceder con la generación de sesiones.")
-        #quiero que la fecha fin y la fecha inicio solo tenga en cuenta el date y que haya otros 
-        #2 campos que sean hora inicio y hora fin que gestionen hasta que hora pueden empezar las películas
-        #widget="timesheet_uom_timer" campo float devuelve
+        
         hora_inicio = int(self.hora_inicio)
         minuto_inicio= int((self.hora_inicio- hora_inicio)*60)
 
@@ -75,23 +73,33 @@ class WizardGenerateSessions(models.TransientModel):
         fecha_final_generacion = datetime.combine(self.fecha_final, time(hora_final, minuto_final))
         fecha_sesion = datetime.combine(self.fecha_inicio, time(hora_inicio, minuto_inicio))
 
-        duracion_max_eventos = max(self.listado_eventos, key=lambda e: e.duracion)
+        duracion_max_eventos = max(self.listado_eventos, key=lambda evento: evento.duracion)
         duracion_max_anuncios = sum(anuncio.duracion for anuncio in self.listado_anuncios)
         duracion_maxima = duracion_max_eventos.duracion + duracion_max_anuncios
 
-        eventos_pendientes = list(self.listado_eventos)
+        eventos_ordenados = sorted(self.listado_eventos, key=lambda evento: int(evento.prioridad), reverse=True)
+        eventos_pendientes_ordenados = list(eventos_ordenados)
 
         while fecha_sesion <= (fecha_final_generacion + timedelta(minutes=duracion_maxima)):
             if fecha_sesion.hour < hora_inicio or fecha_sesion.hour > hora_final:
                 fecha_sesion = fecha_sesion.replace(hour=hora_inicio, minute=minuto_inicio, second=0) + timedelta(days=1)
                 continue
             for sala in self.listado_salas:
-                if not eventos_pendientes:
-                    eventos_pendientes = list(self.listado_eventos)#reinicia lista
-                    
-                evento = eventos_pendientes.pop(0)
-                #campos de la sesión concreta
-                duracion_anuncios = sum(anuncio.duracion for anuncio in self.listado_anuncios)
+                if not eventos_pendientes_ordenados:
+                    eventos_pendientes_ordenados = list(self.listado_eventos)#reinicia lista
+                
+                evento = eventos_pendientes_ordenados.pop(0)
+                listado_anuncios_evento= []
+                for anuncio in self.listado_anuncios:
+                    if anuncio.genero_id.name == "Comercial":
+                        listado_anuncios_evento.append(anuncio)
+                    elif anuncio.genero_id in evento.genero_id:
+                        if anuncio.pegi == evento.pegi:
+                            listado_anuncios_evento.append(anuncio)
+                        else:
+                            raise UserWarning(f"Anuncio {anuncio.name} no puede asignarse automáticamente a este evento por PEGI")
+
+                duracion_anuncios = sum(anuncio.duracion for anuncio in listado_anuncios_evento)
                 duracion = evento.duracion + duracion_anuncios
                 tarifa = self.obtener_tarifa(fecha_sesion)
                 fecha_fin = fecha_sesion + timedelta(minutes=duracion)
@@ -111,7 +119,7 @@ class WizardGenerateSessions(models.TransientModel):
                         'fecha_inicio': fecha_sesion,
                         'fecha_fin': fecha_fin,
                         'evento_id': evento.id,
-                        'anuncios_ids': [(6, 0, self.listado_anuncios.ids)],
+                        'anuncios_ids': [(6, 0, listado_anuncios_evento.ids)],
                         'sala_id': sala.id,
                         'tarifa_id': tarifa
                     })
@@ -119,12 +127,12 @@ class WizardGenerateSessions(models.TransientModel):
                 fecha_sesion += timedelta(minutes=duracion+20)
 
     def obtener_tarifa(self, fecha_sesion):
-        dia_tarifa = fecha_sesion.weekday() # Obtiene el día de la semana (0=Lunes, 6=Domingo)
+        dia_tarifa = fecha_sesion.weekday()
 
-        # Intentamos encontrar la tarifa para el día actual
+        #Intentamos encontrar la tarifa para el día actual
         tarifa = next((tarifa for tarifa in self.listado_tarifas if tarifa.dia_tarifa == dia_tarifa), None)
 
-        # Si no hay tarifa para hoy, buscamos la del día anterior (-1)
+        #Si no hay tarifa para hoy, buscamos la del día anterior (-1)
         if tarifa is None:
             tarifa = next((tarifa for tarifa in self.listado_tarifas if tarifa.dia_tarifa == - 1), None)
 
