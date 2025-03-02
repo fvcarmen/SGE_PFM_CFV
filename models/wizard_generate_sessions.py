@@ -82,9 +82,6 @@ class WizardGenerateSessions(models.TransientModel):
         hora_final = int(self.hora_final) 
         minuto_final = int((self.hora_final - hora_final) * 60)
 
-        duracion_max_eventos = max(self.listado_eventos, key=lambda evento: evento.duracion)
-        duracion_max_anuncios = sum(anuncio.duracion for anuncio in self.listado_anuncios)
-        duracion_maxima = duracion_max_eventos.duracion + duracion_max_anuncios
         fecha_final_generacion = datetime.combine(self.fecha_final, time(hora_final, minuto_final))
         fecha_sesion = datetime.combine(self.fecha_inicio, time(hora_inicio, minuto_inicio))
         eventos_ordenados = sorted(self.listado_eventos, key=lambda evento: int(evento.prioridad), reverse=True)
@@ -92,7 +89,6 @@ class WizardGenerateSessions(models.TransientModel):
         salas_ordenadas = sorted(self.listado_salas, key=lambda s: s.capacidad, reverse=True)
         for sala in salas_ordenadas:
             fecha_sesion_actual = fecha_sesion  #reinicia para cada sala
-
             while fecha_sesion_actual <= fecha_final_generacion:
                 if fecha_sesion_actual.hour < hora_inicio or fecha_sesion_actual.hour > hora_final:
                     fecha_sesion_actual = fecha_sesion_actual.replace(hour=hora_inicio, minute=minuto_inicio, second=0) + timedelta(days=1)
