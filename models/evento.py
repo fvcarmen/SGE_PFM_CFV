@@ -1,4 +1,8 @@
 from odoo import models, fields
+import logging
+
+_logger = logging.getLogger(__name__)
+
 
 class Evento(models.Model):
     _name = "cine_gestion.evento"
@@ -60,7 +64,19 @@ class Evento(models.Model):
         string="Sesiones"
     )
 
-    
+    def actualizar_campo_semanalmente(self):
+        """Método que se ejecuta cada semana para actualizar registros activos"""
+        _logger.info("CRON ejecutado: actualizando eventos")
+        registros = self.search([('activo', '=', True)])
+        for record in registros:
+            record.write({
+                'prioridad': str(int(record.prioridad)-1),
+            })
+            if int(record.prioridad) < 0:
+                record.write({
+                    'activo': False,
+                })
+        _logger.info("CRON ejecutado: campo 'prioridad' actualizado para %s registros activos.", len(registros))
 
     """recaudacion_total = fields.Float(string="Recaudación Total", help="Ingresos generados")
     campo calculado a través de las entradas/tickets vendidos en cualquier sesion para el evento en concreto
