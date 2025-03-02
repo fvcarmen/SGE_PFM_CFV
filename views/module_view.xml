@@ -154,6 +154,51 @@
             <field name="context">{'search_default_group_by_month': 1, 'search_default_group_by_day': 1, 'search_default_group_by_sala': 1}</field>
         </record>
         
+                <record id="view_cine_gestion_evento_form" model="ir.ui.view">
+            <field name="name">cine.gestion.evento.form</field>
+            <field name="model">cine_gestion.evento</field>
+            <field name="arch" type="xml">
+                <form string="Evento de Cine">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="imagen"/>
+                            <field name="es_pelicula"/>
+                            <field name="descripcion"/>
+                            <field name="prioridad"/>
+                            <field name="activo"/>
+                            <field name="duracion"/>
+                            <field name="distribuidora"/>
+                            <field name="kdms_ids" widget="one2many_list" options="{'no_create': True}"/>
+                            <field name="pegi"/>
+                            <field name="dcp"/>
+                            <field name="generos_ids" widget="many2many_tags"/>
+                            <field name="sesiones_ids" widget="one2many_list" options="{'no_create': True}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_cine_gestion_anuncio_form" model="ir.ui.view">
+            <field name="name">cine.gestion.anuncio.form</field>
+            <field name="model">cine_gestion.anuncio</field>
+            <field name="arch" type="xml">
+                <form string="Anuncio">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="duracion"/>
+                            <field name="activo"/>
+                            <field name="pegi"/>
+                            <field name="genero_id"/>
+                            <field name="sesiones_ids" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
         <!--MENÚS-->
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
 
