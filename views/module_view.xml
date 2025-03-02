@@ -122,8 +122,18 @@
             </field>
         </record>
 
-        <record id="view_sesion_form" model="ir.ui.view">
-            <field name="name">cine.gestion.sesion.form</field>
+        <record id="cine_gestion.action_sesion" model="ir.actions.act_window">
+            <field name="name">Sesiones</field>
+            <field name="res_model">cine_gestion.sesion</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="cine_gestion.sesion_tree"/>
+            <field name="search_view_id" ref="cine_gestion.sesion_search"/>
+            <field name="context">{'search_default_group_by_month': 1, 'search_default_group_by_day': 1, 'search_default_group_by_sala': 1}</field>
+        </record>
+        <!--Vistas form-->
+        <!--Vista form sesiones-->
+        <record id="view_cine_gestion_sesion_form" model="ir.ui.view">
+            <field name="name">cine_gestion.sesion.form</field>
             <field name="model">cine_gestion.sesion</field>
             <field name="arch" type="xml">
                 <form string="Sesión de Cine">
@@ -144,19 +154,9 @@
                 </form>
             </field>
         </record>
-
-
-        <record id="cine_gestion.action_sesion" model="ir.actions.act_window">
-            <field name="name">Sesiones</field>
-            <field name="res_model">cine_gestion.sesion</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="cine_gestion.sesion_tree"/>
-            <field name="search_view_id" ref="cine_gestion.sesion_search"/>
-            <field name="context">{'search_default_group_by_month': 1, 'search_default_group_by_day': 1, 'search_default_group_by_sala': 1}</field>
-        </record>
-        
+        <!--Vista form eventos-->
         <record id="view_cine_gestion_evento_form" model="ir.ui.view">
-            <field name="name">cine.gestion.evento.form</field>
+            <field name="name">cine_gestion.evento.form</field>
             <field name="model">cine_gestion.evento</field>
             <field name="arch" type="xml">
                 <form string="Evento de Cine">
@@ -194,9 +194,9 @@
                 </form>
             </field>
         </record>
-
+        <!--Vista form anuncios-->
         <record id="view_cine_gestion_anuncio_form" model="ir.ui.view">
-            <field name="name">cine.gestion.anuncio.form</field>
+            <field name="name">cine_gestion.anuncio.form</field>
             <field name="model">cine_gestion.anuncio</field>
             <field name="arch" type="xml">
                 <form string="Anuncio">
@@ -213,6 +213,40 @@
                 </form>
             </field>
         </record>
+        <!--Vista form tarifas-->
+        <record id="view_cine_gestion_tarifa_form" model="ir.ui.view">
+            <field name="name">cine_gestion.tarifa.form</field>
+            <field name="model">cine_gestion.tarifa</field>
+            <field name="arch" type="xml">
+                <form string="Tarifa">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="precio"/>
+                            <field name="dia_tarifa"/>
+                            <field name="activo"/>
+                        </group>
+
+                        <group>
+                            <field name="descuentos_ids" widget="one2many" options="{'no_create': True}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="descuento"/>
+                                </tree>
+                            </field>
+                            <field name="sesiones_ids" widget="one2many" options="{'no_create': True}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="duracion"/>
+                                    <field name="tarifa_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
 
         <!--MENÚS-->
         <menuitem id="cine_gestion.menu_root" name="Cine"/>
