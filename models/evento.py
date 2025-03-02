@@ -69,9 +69,10 @@ class Evento(models.Model):
         _logger.info("CRON ejecutado: actualizando eventos")
         registros = self.search([('activo', '=', True)])
         for record in registros:
-            record.write({
-                'prioridad': str(int(record.prioridad)-1),
-            })
+            if len(record.sesiones_ids) > 1:
+                record.write({
+                    'prioridad': str(int(record.prioridad)-1),
+                })
             if int(record.prioridad) < 0:
                 record.write({
                     'activo': False,
