@@ -6,6 +6,7 @@
     'category': 'Uncategorized',
     'depends': [
         'base',
+        'mail',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -17,6 +18,8 @@
         'data/kdms.xml',
         'data/tarifas.xml',
         'data/cine_gestion.asiento.csv',
+        'reports/sesion_informe_template.xml',
+        'data/ir_cron.xml',
         #'views/anuncios_views.xml',
         #'views/descuentos_views.xml',
         #'views/eventos_views.xml',

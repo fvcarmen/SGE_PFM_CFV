@@ -1,0 +1,57 @@
+<odoo>
+    <template id="report_sesion_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="text-center">Sesiones de Cine</h2>
+
+                    <!-- Step 1: Sort all sessions by fecha_inicio -->
+                    <t t-set="sesiones_ordenadas" t-value="sorted(docs, key=lambda s: s.fecha_inicio)"/>
+
+                    <!-- Step 2: Get unique dates in order -->
+                    <t t-set="fechas_unicas" t-value="sorted(list(set([sesion.fecha_inicio.strftime('%Y-%m-%d') for sesion in sesiones_ordenadas])))"/>
+
+                    <!-- Step 3: Iterate over unique dates -->
+                    <t t-foreach="fechas_unicas" t-as="fecha">
+                        <hr/>
+                        <h3>Fecha: <t t-esc="fecha"/></h3>
+
+                        <!-- Step 4: Get unique salas for this date, sorted -->
+                        <t t-set="salas_unicas" t-value="sorted(list(set([sesion.sala_id.name for sesion in sesiones_ordenadas if sesion.fecha_inicio.strftime('%Y-%m-%d') == fecha])))"/>
+
+                        <!-- Step 5: Iterate over salas for this date -->
+                        <t t-foreach="salas_unicas" t-as="sala_name">
+                            <h4>Sala: <t t-esc="sala_name"/></h4>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Evento</th>
+                                        <th>Inicio</th>
+                                        <th>Fin</th>
+                                        <th>Duración</th>
+                                        <th>Tarifa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Step 6: Filter and display sessions by date and sala -->
+                                    <t t-foreach="sesiones_ordenadas" t-as="sesion">
+                                        <t t-if="sesion.fecha_inicio.strftime('%Y-%m-%d') == fecha and sesion.sala_id.name == sala_name">
+                                            <tr>
+                                                <td t-esc="sesion.evento_id.name"/>
+                                                <td t-esc="sesion.fecha_inicio.strftime('%H:%M')"/>
+                                                <td t-esc="sesion.fecha_fin.strftime('%H:%M')"/>
+                                                <td t-esc="(sesion.fecha_fin - sesion.fecha_inicio).seconds // 60"/>
+                                                <td t-esc="sesion.tarifa_id.name"/>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

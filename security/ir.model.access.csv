@@ -9,3 +9,4 @@ cine_gestion_evento,cine_gestion_evento,cine_gestion.model_cine_gestion_evento,b
 cine_gestion_kdm,cine_gestion_kdm,cine_gestion.model_cine_gestion_kdm,base.group_user,1,1,1,1
 cine_gestion_sesion,cine_gestion_sesion,cine_gestion.model_cine_gestion_sesion,base.group_user,1,1,1,1
 cine_gestion_wizard_generate_sessions,cine_gestion_wizard_generate_sessions,cine_gestion.model_cine_gestion_wizard_generate_sessions,base.group_user,1,1,1,1
+cine_gestion_sesion_informe,cine_gestion_sesion,cine_gestion.model_cine_gestion_sesion,base.group_user,1,0,0,0
