@@ -145,6 +145,7 @@
             </field>
         </record>
 
+
         <record id="cine_gestion.action_sesion" model="ir.actions.act_window">
             <field name="name">Sesiones</field>
             <field name="res_model">cine_gestion.sesion</field>
@@ -154,7 +155,7 @@
             <field name="context">{'search_default_group_by_month': 1, 'search_default_group_by_day': 1, 'search_default_group_by_sala': 1}</field>
         </record>
         
-                <record id="view_cine_gestion_evento_form" model="ir.ui.view">
+        <record id="view_cine_gestion_evento_form" model="ir.ui.view">
             <field name="name">cine.gestion.evento.form</field>
             <field name="model">cine_gestion.evento</field>
             <field name="arch" type="xml">
@@ -163,17 +164,31 @@
                         <group>
                             <field name="name" required="1"/>
                             <field name="imagen"/>
+                        </group>
+                        <group>
                             <field name="es_pelicula"/>
                             <field name="descripcion"/>
                             <field name="prioridad"/>
                             <field name="activo"/>
                             <field name="duracion"/>
                             <field name="distribuidora"/>
-                            <field name="kdms_ids" widget="one2many_list" options="{'no_create': True}"/>
                             <field name="pegi"/>
                             <field name="dcp"/>
                             <field name="generos_ids" widget="many2many_tags"/>
-                            <field name="sesiones_ids" widget="one2many_list" options="{'no_create': True}"/>
+                            <field name="kdms_ids" widget="one2many" options="{'no_create': True}" context="{'default_evento_id': active_id}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name ="vencimiento"/>
+                                    <field name="estado"/>
+                                </tree>
+                            </field>
+                            <field name="sesiones_ids" widget="one2many" options="{'no_create': True}" context="{'default_evento_id': active_id}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name ="duracion"/>
+                                    <field name="tarifa_id"/>
+                                </tree>
+                            </field>
                         </group>
                     </sheet>
                 </form>
