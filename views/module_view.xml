@@ -95,16 +95,25 @@
             </field>
         </record>
 
-    <record id="action_report_sesion" model="ir.actions.report">
-        <field name="name">Sesion report</field>
-        <field name="model">cine_gestion.sesion</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">cine_gestion.report_sesion_document</field>
-        <field name="report_file">cine_gestion.report_sesion_document</field>
-        <field name="print_report_name">'Student Card - %s' % (object.name)</field>
-        <field name="binding_model_id" ref="model_cine_gestion_sesion"/>
-    </record>
-
+        <record id="action_report_sesion" model="ir.actions.report">
+            <field name="name">Sesion report</field>
+            <field name="model">cine_gestion.sesion</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cine_gestion.report_sesion_document</field>
+            <field name="report_file">cine_gestion.report_sesion_document</field>
+            <field name="print_report_name">'Student Card - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_cine_gestion_sesion"/>
+        </record>
+        <record id="cine_gestion.action_sesion" model="ir.actions.act_window">
+            <field name="name">Sesiones</field>
+            <field name="res_model">cine_gestion.sesion</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="cine_gestion.sesion_tree"/>
+            <field name="search_view_id" ref="cine_gestion.sesion_search"/>
+            <field name="context">{'search_default_group_by_month': 1, 'search_default_group_by_day': 1, 'search_default_group_by_sala': 1}</field>
+        </record>
+        <!--Vistas tree-->
+        <!--Vista tree sesion-->
         <record id="cine_gestion.sesion_tree" model="ir.ui.view">
             <field name="name">Lista de sesiones</field>
             <field name="model">cine_gestion.sesion</field>
@@ -121,15 +130,23 @@
                 </tree>
             </field>
         </record>
-
-        <record id="cine_gestion.action_sesion" model="ir.actions.act_window">
-            <field name="name">Sesiones</field>
-            <field name="res_model">cine_gestion.sesion</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="cine_gestion.sesion_tree"/>
-            <field name="search_view_id" ref="cine_gestion.sesion_search"/>
-            <field name="context">{'search_default_group_by_month': 1, 'search_default_group_by_day': 1, 'search_default_group_by_sala': 1}</field>
+        <!--Vista tree evento-->
+        <record id="cine_gestion.evento_tree" model="ir.ui.view">
+            <field name="name">Lista de eventos</field>
+            <field name="model">cine_gestion.evento</field>
+            <field name="arch" type="xml"> 
+                <tree string="Eventos">
+                    <field name="name" string="Título"/>
+                    <field name="pegi"/>
+                    <field name="distribuidora"/>
+                    <field name="duracion"/>
+                    <field name="prioridad"/>
+                    <field name="activo"/>
+                </tree>
+            </field>
         </record>
+
+        
         <!--Vistas form-->
         <!--Vista form sesiones-->
         <record id="view_cine_gestion_sesion_form" model="ir.ui.view">
@@ -163,7 +180,7 @@
                     <sheet>
                         <group>
                             <field name="name" required="1"/>
-                            <field name="imagen"/>
+                            <field name="imagen" widget="image"/>
                         </group>
                         <group>
                             <field name="es_pelicula"/>
