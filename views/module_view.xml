@@ -107,10 +107,20 @@
         <record id="cine_gestion.action_sesion" model="ir.actions.act_window">
             <field name="name">Sesiones</field>
             <field name="res_model">cine_gestion.sesion</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,calendar</field>
             <field name="view_id" ref="cine_gestion.sesion_tree"/>
             <field name="search_view_id" ref="cine_gestion.sesion_search"/>
             <field name="context">{'search_default_group_by_month': 1, 'search_default_group_by_day': 1, 'search_default_group_by_sala': 1}</field>
+        </record>
+        <!--Vista calendar?-->
+        <record id="cine_gestion_sesion_calendar" model="ir.ui.view">
+            <field name="name">Vista calendario</field>
+            <field name="model">cine_gestion.sesion</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendario de sesiones" date_start="fecha_inicio" date_stop="fecha_fin" color="sala_id" default_view="week">
+                    <field name="name"/>
+                </calendar>
+            </field>
         </record>
         <!--Vistas tree-->
         <!--Vista tree sesion-->
