@@ -183,15 +183,7 @@ Este módulo depende del siguiente módulo:
 
 ### Dependencias de otros módulos
 
-*   Para la venta de entradas y productos: ventas
-    
-*   Para gestionar las ventas por usuario: empleados
-    
-*   Para sincronizar la venta de entradas con el tpv: punto de venta
-    
-*   Para enviar recordatorios de caducidad de kdm: mail
-    
-*   Para la gestión de generación de sesiones con tarifas acordes, acceso al: calendario
+*   Para el funcionamiento de los automatismos: mail
     
 
 ### Wireframes
