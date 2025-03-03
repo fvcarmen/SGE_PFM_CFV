@@ -180,6 +180,33 @@
                 </tree>
             </field>
         </record>
+        <!--Vista tree anuncios-->
+        <record id="cine_gestion.anuncio_tree" model="ir.ui.view">
+            <field name="name">Lista de Anuncios</field>
+            <field name="model">cine_gestion.anuncio</field>
+            <field name="arch" type="xml"> 
+                <tree string="Anuncios">
+                    <field name="name" string="Nombre"/>
+                    <field name="genero_id"/>
+                    <field name="duracion"/>
+                    <field name="pegi"/>
+                    <field name="activo"/>
+                </tree>
+            </field>
+        </record>
+        <!--Vista tree tarifas-->
+        <record id="cine_gestion.tarifas_tree" model="ir.ui.view">
+            <field name="name">Lista de Tarifas</field>
+            <field name="model">cine_gestion.tarifa</field>
+            <field name="arch" type="xml"> 
+                <tree string="Tarifas">
+                    <field name="name" string="Nombre"/>
+                    <field name="precio"/>
+                    <field name="descuentos_ids"/>
+                    <field name="activo"/>
+                </tree>
+            </field>
+        </record>
         <!--Vistas form-->
         <!--Vista form sesiones-->
         <record id="view_cine_gestion_sesion_form" model="ir.ui.view">
