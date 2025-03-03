@@ -11,5 +11,15 @@
             <field name="numbercall">-1</field>
             <field name="active" eval="True"/>
         </record>
+        <record id="ir_cron_actualizar_estado_kdm" model="ir.cron">
+            <field name="name">Actualizar KDMs vencidos</field>
+            <field name="model_id" ref="model_cine_gestion_kdm"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_actualizar_estado()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True"/>
+        </record>
     </data>
 </odoo>

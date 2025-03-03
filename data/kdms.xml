@@ -1,9 +1,48 @@
 <odoo>
     <data>
         <record model="cine_gestion.kdm" id="cine_gestion.kdm_la_comunidad_del_anillo">
-            <field name="name">4654321987A91</field>
+            <field name="name">465432198791</field>
             <field name="vencimiento">2025-12-12</field>
             <field name="evento_id" ref="cine_gestion.evento_la_comunidad_del_anillo"/>
         </record>
     </data>
+    <record model="cine_gestion.kdm" id="cine_gestion.kdm_guerra_de_los_mundos_1">
+        <field name="name">123456789012</field>
+        <field name="vencimiento">2025-05-15</field>
+        <field name="evento_id" ref="cine_gestion.evento_guerra_de_los_mundos"/>
+    </record>
+    <record model="cine_gestion.kdm" id="cine_gestion.kdm_guerra_de_los_mundos_2">
+        <field name="name">987654321098</field>
+        <field name="vencimiento">2025-11-20</field>
+        <field name="evento_id" ref="cine_gestion.evento_guerra_de_los_mundos"/>
+    </record>
+
+    <record model="cine_gestion.kdm" id="cine_gestion.kdm_el_viaje_infinito_1">
+        <field name="name">234567890123</field>
+        <field name="vencimiento">2025-06-30</field>
+        <field name="evento_id" ref="cine_gestion.evento_el_viaje_infinito"/>
+    </record>
+
+    <record model="cine_gestion.kdm" id="cine_gestion.kdm_el_misterio_del_abismo_1">
+        <field name="name">345678901234</field>
+        <field name="vencimiento">2025-07-22</field>
+        <field name="evento_id" ref="cine_gestion.evento_el_misterio_del_abismo"/>
+    </record>
+
+    <record model="cine_gestion.kdm" id="cine_gestion.kdm_sombras_de_la_noche_1">
+        <field name="name">456789012345</field>
+        <field name="vencimiento">2025-08-10</field>
+        <field name="evento_id" ref="cine_gestion.evento_sombras_de_la_noche"/>
+    </record>
+
+    <record model="cine_gestion.kdm" id="cine_gestion.kdm_la_ultima_esperanza_1">
+        <field name="name">567890123456</field>
+        <field name="vencimiento">2025-09-05</field>
+        <field name="evento_id" ref="cine_gestion.evento_la_ultima_esperanza"/>
+    </record>
+    <record model="cine_gestion.kdm" id="cine_gestion.kdm_la_ultima_esperanza_2">
+        <field name="name">678901234567</field>
+        <field name="vencimiento">2025-12-12</field>
+        <field name="evento_id" ref="cine_gestion.evento_la_ultima_esperanza"/>
+    </record>
 </odoo>

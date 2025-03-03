@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -38,6 +38,11 @@ class Evento(models.Model):
         string="KDM",
         help="Clave de KDM asociada"
     )
+    tiene_kdm_activo = fields.Boolean(
+        string="Tiene KDM Activo",
+        compute="_compute_tiene_kdm_activo",
+        store=True
+    )
     pegi = fields.Selection(
         [
         ('desconocido', 'Desconocido'),
@@ -63,6 +68,11 @@ class Evento(models.Model):
         'evento_id',
         string="Sesiones"
     )
+
+    @api.depends('kdms_ids.estado')
+    def _compute_tiene_kdm_activo(self):
+        for rec in self:
+            rec.tiene_kdm_activo = any(kdm.estado for kdm in rec.kdms_ids)
 
     def actualizar_campo_semanalmente(self):
         """Método que se ejecuta cada semana para actualizar registros activos"""
