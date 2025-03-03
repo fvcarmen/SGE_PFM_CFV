@@ -135,7 +135,7 @@ Este módulo depende del siguiente módulo:
 ## Servicios Externos
 
 ### URL del Fork de OdooDock
-   - **OdooDock Fork**: [https://github.com/tuusuario/odoodock-fork](https://github.com/tuusuario/odoodock-fork) 
+   - **OdooDock Fork**: [https://github.com/aoltra/odoodock](https://github.com/aoltra/odoodock)
 
 # Instalación del módulo
 
