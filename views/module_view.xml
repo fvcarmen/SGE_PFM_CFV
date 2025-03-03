@@ -154,18 +154,29 @@
             <field name="model">cine_gestion.sesion</field>
             <field name="arch" type="xml">
                 <form string="Sesión de Cine">
+                    <xpath expr="//style" position="after">
+                        <link rel="stylesheet" href="/cine_gestion/static/css/cine_gestion.css"/>
+                    </xpath>
                     <sheet>
                         <group>
                             <field name="name"/>
                             <field name="fecha_inicio"/>
-                            <field name="fecha_fin" readonly="1"/>
-                            <field name="evento_id"/>
+                            <field name="fecha_fin" readonly="1"/>                            
+                        </group>
+                        <group>
                             <field name="duracion"/>
                             <field name="ocupacion"/>
                             <field name="anuncios_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
                             <field name="activo"/>
                             <field name="sala_id"/>
                             <field name="tarifa_id"/>
+                        </group>
+
+                        <group>
+                            <field name="evento_id"/>
+                            <field name="estado_kdm" class="estado_kdm"/>
                         </group>
                     </sheet>
                 </form>
