@@ -32,23 +32,24 @@ class Sesion(models.Model):
     #función para comprobar si la sesión programada tendrá un kdm válido
     @api.depends('fecha_fin', 'kdms')
     def _compute_estado_kdm(self):
-        self.ensure_one()
+        for sesion in self:
+            if self.fecha_fin:
+                fecha_fin = datetime.date(self.fecha_fin)
 
-        fecha_fin = datetime.date(self.fecha_fin)
+                kdm_validos = self.kdms.filtered(
+                    lambda kdm: kdm.vencimiento > fecha_fin
+                )
 
-        kdm_validos = self.kdms.filtered(
-            lambda kdm: kdm.vencimiento > fecha_fin
-        )
-
-        if not kdm_validos:
-            self.estado_kdm = "KDM inválido"
-        else:
-            self.estado_kdm=""
+                if not kdm_validos:
+                    self.estado_kdm = "KDM inválido"
+                else:
+                    self.estado_kdm=""
+            else:
+                self.estado_kdm=""
 
     #función para calcular la duración de la sesión
     @api.depends('anuncios_ids', 'evento_id')
     def _compute_duracion(self):
-
         for sesion in self:
             duracion = sesion.evento_id.duracion if sesion.evento_id else 0
 
@@ -56,13 +57,15 @@ class Sesion(models.Model):
                 duracion = duracion + anuncio.duracion
             sesion.duracion = duracion
     
-
     #función para calcular el nombre de la sesión
     @api.depends('fecha_inicio', 'evento_id', 'sala_id')
     def _compute_session_name(self):
         for sesion in self:
             if sesion.fecha_inicio and sesion.evento_id and sesion.sala_id:
-                sesion.name=f"{sesion.sala_id.name}: {sesion.evento_id.name} del {sesion.fecha_inicio}"
+                if sesion.evento_id.name and sesion.sala_id.name:
+                    sesion.name=f"{sesion.sala_id.name}: {sesion.evento_id.name} del {sesion.fecha_inicio}"
+                else:
+                    sesion.name="Sesión por Asignar"
             else:
                 sesion.name="Sesión por Asignar"
     
