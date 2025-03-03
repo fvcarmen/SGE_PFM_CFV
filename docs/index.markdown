@@ -99,15 +99,15 @@ Este módulo gestiona todos los eventos y películas del cine, incluyendo la pro
 ## URL repositorio: 
    - **Cine Gestion**: [https://github.com/fvcarmen/SGE_PFM_CFV/](https://github.com/fvcarmen/SGE_PFM_CFV/)
 ## Orden de instalación
-- Módulo `mail´ requerido para el uso de cron en el módulo principal
-- Módulo `cine_gestion´
+- Módulo `mail` requerido para el uso de cron en el módulo principal
+- Módulo `cine_gestion`
 ## Roles
 - **Administrador**:  
   - **Usuario**: `fverducarmen@gmail.com`
   - **Contraseña**: `admin`
   
 - **Usuario**:
-  - **Usuario**: `10001134
+  - **Usuario**: `10001134`
   - **Contraseña**: `1234`
 
 ## Datos de Autenticación del Administrador
