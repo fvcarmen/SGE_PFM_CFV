@@ -11,7 +11,7 @@ class Tarifas(models.Model):
     activo = fields.Boolean(string="Activo", default=True)
 
     descuentos_ids = fields.One2many('cine_gestion.descuento', 'tarifa_id', string="Descuentos")
-    sesiones_ids = fields.One2many('cine_gestion.sesion', 'tarifa_id', string = "Sesiones")
+    sesiones_ids = fields.One2many('cine_gestion.sesion', 'tarifa_id', string = "Sesiones", readonly=True)
 
 
     @api.constrains('dia_tarifa')

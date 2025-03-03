@@ -12,7 +12,7 @@ class Sala(models.Model):
     activo = fields.Boolean(string="Activo", default=True)
 
     asientos_ids = fields.One2many('cine_gestion.asiento', 'sala_id', string="Asientos")
-    sesiones_ids = fields.One2many('cine_gestion.sesion', 'sala_id', string="Sesiones")
+    sesiones_ids = fields.One2many('cine_gestion.sesion', 'sala_id', string="Sesiones", readonly=True)
     
 
     #función calculo capacidad
