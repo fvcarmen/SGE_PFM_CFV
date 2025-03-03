@@ -23,7 +23,8 @@ class Sesion(models.Model):
     
     tarifa_id = fields.Many2one(
         'cine_gestion.tarifa',
-        string="Tarifa"
+        string="Tarifa",
+        required=True
         )
     
     estado_kdm = fields.Char(string="Estado", compute="_compute_estado_kdm")
