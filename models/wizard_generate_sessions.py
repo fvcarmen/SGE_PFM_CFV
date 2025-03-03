@@ -62,6 +62,7 @@ class WizardGenerateSessions(models.TransientModel):
     def _check_unique_dia_valido(self):
         for record in self:
             dias_con_tarifa = []
+            valor_default = False
             for tarifa in record.listado_tarifas:
                 if tarifa.dia_tarifa in dias_con_tarifa:
                     raise UserError(f"Ya existe una tarifa con el código {tarifa.dia_tarifa}. No se permiten tarifas duplicadas para el mismo día." )
@@ -79,6 +80,8 @@ class WizardGenerateSessions(models.TransientModel):
             raise UserError("Debes definir una fecha de inicio y una fecha de fin para la generación de sesiones.")
         if self.fecha_inicio > self.fecha_final:
             raise UserError("La fecha de inicio debe ser anterior a la fecha de fin para la generación de sesiones.")
+        if self.hora_inicio < 00.01 or self.hora_inicio > 23.59 or self.hora_final < 00.01 or self.hora_final > 23.59:
+            raise UserError("La hora ha de ser un valor entre 00.01 y 23.59")
         if self.hora_inicio >= self.hora_final:
             raise UserError("La hora de inicio debe ser anterior a la hora de fin para la generación de sesiones.")
         if not self.listado_eventos or self.minimo_eventos > len(self.listado_eventos): 
