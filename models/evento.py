@@ -84,18 +84,19 @@ class Evento(models.Model):
 
 
     def actualizar_campo_semanalmente(self):
-
         """Método que se ejecuta cada semana para actualizar registros activos"""
         _logger.info("CRON ejecutado: actualizando eventos")
         registros = self.search([('activo', '=', True)])
         for record in registros:
             if len(record.sesiones_ids) > 1:
-                record.write({
-                    'prioridad': str(int(record.prioridad)-1),
+                    if int(record.prioridad) == 0:
+                        record.write({
+                            'activo': False,
+                        })
+                    else:
+                        record.write({
+                            'prioridad': str(int(record.prioridad)-1),
                 })
-            if int(record.prioridad) < 0:
-                record.write({
-                    'activo': False,
-                })
+            
         _logger.info("CRON ejecutado: campo 'prioridad' actualizado para %s registros activos.", len(registros))
 

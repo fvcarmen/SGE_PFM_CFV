@@ -4,8 +4,7 @@
             <field name="name">Actualizar Campo Semanal</field>
             <field name="model_id" ref="model_cine_gestion_evento"/>
             <field name="state">code</field>
-            <field name="code">cine_gestion.evento.actualizar_campo_semanalmente()</field>
-            <field name="user_id" ref="base.user_root"/>
+            <field name="code">model.actualizar_campo_semanalmente()</field>
             <field name="interval_type">weeks</field>
             <field name="interval_number">1</field>
             <field name="numbercall">-1</field>
