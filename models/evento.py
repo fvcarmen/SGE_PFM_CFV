@@ -23,15 +23,15 @@ class Evento(models.Model):
 
     prioridad = fields.Selection(
         [
-        ('5', 'Estreno'),
-        ('4', 'Post-Estreno'),
-        ('3', 'Normal'),
-        ('2', 'Normal'),
+        ('5', 'Prioridad Estreno'),
+        ('4', 'Prioridad Post-Estreno'),
+        ('3', 'Prioridad Alta'),
+        ('2', 'Prioridad Normal'),
         ('1', 'Baja Prioridad'),
         ('0', 'Sin prioridad'),
         ],
         default='5',
-        #readonly=True,
+        required=True,
         string="Prioridad"
     )
     
@@ -72,7 +72,8 @@ class Evento(models.Model):
     sesiones_ids = fields.One2many(
         'cine_gestion.sesion',
         'evento_id',
-        string="Sesiones"
+        string="Sesiones",
+        readonly=True
     )
 
     @api.depends('kdms_ids.estado')
