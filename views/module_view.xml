@@ -117,8 +117,8 @@
             <field name="name">Vista calendario</field>
             <field name="model">cine_gestion.sesion</field>
             <field name="arch" type="xml">
-                <calendar string="Calendario de sesiones" date_start="fecha_inicio" date_stop="fecha_fin" color="sala_id" default_view="week">
-                    <field name="name"/>
+                <calendar string="Calendario de sesiones" date_start="fecha_inicio" date_stop="fecha_fin" color="sala_id">
+                    <field name="name"/>    
                 </calendar>
             </field>
         </record>
@@ -155,8 +155,31 @@
                 </tree>
             </field>
         </record>
-
-        
+        <!--Vista tree kdms-->
+        <record id="cine_gestion.kdm_tree" model="ir.ui.view">
+            <field name="name">Lista de KDMs</field>
+            <field name="model">cine_gestion.kdm</field>
+            <field name="arch" type="xml"> 
+                <tree string="KDMs">
+                    <field name="name" string="Clave"/>
+                    <field name="vencimiento"/>
+                    <field name="estado"/>
+                </tree>
+            </field>
+        </record>
+        <!--Vista tree salas-->
+        <record id="cine_gestion.sala_tree" model="ir.ui.view">
+            <field name="name">Lista de Salas</field>
+            <field name="model">cine_gestion.sala</field>
+            <field name="arch" type="xml"> 
+                <tree string="Salas">
+                    <field name="name" string="Sala"/>
+                    <field name="capacidad"/>
+                    <field name="tipo"/>
+                    <field name="activo"/>
+                </tree>
+            </field>
+        </record>
         <!--Vistas form-->
         <!--Vista form sesiones-->
         <record id="view_cine_gestion_sesion_form" model="ir.ui.view">
