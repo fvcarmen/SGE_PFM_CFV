@@ -9,12 +9,18 @@ class Evento(models.Model):
     _description = "Eventos de Cine"
 
     name = fields.Char(string="Título", required=True)
+    descripcion = fields.Text(string="Descripción")
+    activo = fields.Boolean(string="Activo", default=True)
+    duracion = fields.Integer(string="Duración (min)", help="Duración en minutos", required=True)
+    dcp = fields.Boolean(string="Formato DCP", default=False)
+    distribuidora = fields.Char(string="Distribuidora", required=True)
+
     imagen = fields.Image(string="Imagen")
     es_pelicula = fields.Boolean(
         string="¿Se va a proyectar una película?",
         default=True
     )
-    descripcion = fields.Text(string="Descripción")
+
     prioridad = fields.Selection(
         [
         ('5', 'Estreno'),
@@ -29,20 +35,19 @@ class Evento(models.Model):
         string="Prioridad"
     )
     
-    activo = fields.Boolean(string="Activo", default=True)
-    duracion = fields.Integer(string="Duración (min)", help="Duración en minutos", required=True)
-    distribuidora = fields.Char(string="Distribuidora", required=True)
     kdms_ids = fields.One2many(
         'cine_gestion.kdm',
         'evento_id',
         string="KDM",
         help="Clave de KDM asociada"
     )
+
     tiene_kdm_activo = fields.Boolean(
         string="Tiene KDM Activo",
         compute="_compute_tiene_kdm_activo",
         store=True
     )
+
     pegi = fields.Selection(
         [
         ('desconocido', 'Desconocido'),
@@ -57,12 +62,13 @@ class Evento(models.Model):
         default='desconocido',
         required=True
     )
-    dcp = fields.Boolean(string="Formato DCP", default=False)
+    
     generos_ids = fields.Many2many(
         'cine_gestion.genero',
         string="Género",
         required=True
     )
+
     sesiones_ids = fields.One2many(
         'cine_gestion.sesion',
         'evento_id',
@@ -71,10 +77,13 @@ class Evento(models.Model):
 
     @api.depends('kdms_ids.estado')
     def _compute_tiene_kdm_activo(self):
+
         for rec in self:
             rec.tiene_kdm_activo = any(kdm.estado for kdm in rec.kdms_ids)
 
+
     def actualizar_campo_semanalmente(self):
+
         """Método que se ejecuta cada semana para actualizar registros activos"""
         _logger.info("CRON ejecutado: actualizando eventos")
         registros = self.search([('activo', '=', True)])
@@ -89,6 +98,3 @@ class Evento(models.Model):
                 })
         _logger.info("CRON ejecutado: campo 'prioridad' actualizado para %s registros activos.", len(registros))
 
-    """recaudacion_total = fields.Float(string="Recaudación Total", help="Ingresos generados")
-    campo calculado a través de las entradas/tickets vendidos en cualquier sesion para el evento en concreto
-    """

@@ -9,7 +9,5 @@ from . import genero
 from . import tarifa
 from . import descuento
 from . import asiento
-
-
 from . import wizard_generate_sessions
 #from . import tickets

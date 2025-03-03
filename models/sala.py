@@ -9,15 +9,20 @@ class Sala(models.Model):
     columnas =  fields.Integer("Cantidad de columnas", required=True)
     capacidad = fields.Integer("Capacidad", compute="_capacidad_total")
     tipo = fields.Char("Tipo de sala", compute="_compute_size")
-    asientos_ids = fields.One2many('cine_gestion.asiento', 'sala_id', string="Asientos")
-    sesiones_ids = fields.One2many('cine_gestion.sesion', 'sala_id', string="Sesiones")
     activo = fields.Boolean(string="Activo", default=True)
 
+    asientos_ids = fields.One2many('cine_gestion.asiento', 'sala_id', string="Asientos")
+    sesiones_ids = fields.One2many('cine_gestion.sesion', 'sala_id', string="Sesiones")
+    
+
+    #función calculo capacidad
     @api.depends("filas", "columnas")
     def _capacidad_total(self):
         for sala in self:
             sala.capacidad = sala.filas * sala.columnas
-    
+
+
+    #función tipo de sala
     @api.depends('capacidad')
     def _compute_size(self):
         for sala in self:

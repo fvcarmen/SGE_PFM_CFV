@@ -6,4 +6,8 @@ class Descuento(models.Model):
 
     name = fields.Char(string="Nombre", required=True)
     descuento = fields.Integer(string="Descuento a aplicar", help="Número entero del 1 al 100", required=True)
-    tarifa_id = fields.Many2one('cine_gestion.tarifa', string="Tarifa")
+    
+    tarifa_id = fields.Many2one(
+        'cine_gestion.tarifa',
+        string="Tarifa"
+        )

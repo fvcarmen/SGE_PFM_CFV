@@ -7,11 +7,13 @@ class Asiento(models.Model):
     name = fields.Char("Nombre", compute="_compute_nombre_asiento")
     fila =  fields.Integer("Fila", required=True)
     columna =  fields.Integer("Columna", required=True)
+
     tipo = fields.Selection([
         ('NORM', 'Butaca normal'),
         ('MNSV', 'Butaca reservada minusvalía'),
         ('ESP', 'Butaca especial'),
         ], string="Tipo", default='NORM', required=True)
+    
     sala_id = fields.Many2one('cine_gestion.sala', string="Sala")
 
     @api.depends('sala_id', 'fila', 'columna')

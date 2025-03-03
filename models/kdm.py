@@ -7,10 +7,11 @@ class Kdm(models.Model):
     name = fields.Char(string="Clave", required=True)
     estado = fields.Boolean(string="Estado", default=True, required=True)
     vencimiento = fields.Date(string="Fecha de Vencimiento", required=True)
+
     evento_id = fields.Many2one('cine_gestion.evento', string="Evento", help="Evento al que pertenece")
 
 
-    #actualizar todas las kdms que venzan 'hoy'
+    #actualizar todas las kdms que venzan 'hoy' (cron)
     @api.model
     def cron_actualizar_estado(self):
         today = fields.Date.context_today(self)

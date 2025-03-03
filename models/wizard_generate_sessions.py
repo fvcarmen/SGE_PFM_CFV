@@ -3,39 +3,49 @@ from odoo.exceptions import UserError
 from datetime import datetime, timedelta, time
 
 class WizardGenerateSessions(models.TransientModel):
-    """Wizard para solicitar los datos de generación de las sesiones"""
+    #Wizard para solicitar los datos de generación de las sesiones
     _name = "cine_gestion.wizard_generate_sessions"
     _description = "Formulario de datos para la generación automática de sesiones"
 
     fecha_inicio = fields.Date(string="Fecha Inicio", required = True)
     fecha_final = fields.Date(string="Fecha Fin", required = True)
-    hora_inicio = fields.Float(string="Hora de inicio primera sesión",required = True , help="Formato 24h: 18.50 = 18:30")
-    hora_final = fields.Float(string="Hora de inicio última sesión",required = True , help="Formato 24h: 18.50 = 18:30")
+    hora_inicio = fields.Float(
+        string="Hora de inicio primera sesión",
+        required = True ,
+        help="Formato 24h: 18.50 = 18:30"
+        )
+    hora_final = fields.Float(
+        string="Hora de inicio última sesión",
+        required = True, 
+        help="Formato 24h: 18.50 = 18:30"
+        )
     minimo_eventos = fields.Integer(string="Mínimo de eventos:", compute="_compute_minimo_eventos")
+    
     listado_eventos = fields.Many2many(
         'cine_gestion.evento',
         string='Eventos',
         domain="[('activo','=', True), ('tiene_kdm_activo','=', True)]",
     )
+
     listado_anuncios = fields.Many2many(
         'cine_gestion.anuncio',
         string="Anuncios",
         domain="[('activo','=', True)]",
     )
+
     listado_salas = fields.Many2many(
         'cine_gestion.sala',
         string="Salas",
         domain="[('activo','=', True)]",
     )
+
     listado_tarifas = fields.Many2many(
         'cine_gestion.tarifa',
         string="Tarifas",
         domain="[('activo','=', True)]",
     )
-    #prioridades, informes, tener en cuenta h.
-    #cuando creas un evento nuevo crear propiedad (5-0)que sea estreno crone
-    #generar informe x día x sala las sesiones que van
-    #asignar tarifas correctamente
+    
+
     #campo eventos mínimos calculado
     @api.depends('fecha_inicio', 'fecha_final', 'listado_salas', 'listado_eventos')
     def _compute_minimo_eventos(self):
@@ -46,6 +56,7 @@ class WizardGenerateSessions(models.TransientModel):
                 self.minimo_eventos = int((dias + len(self.listado_salas))*0.5)
         else:
                 self.minimo_eventos = 0
+    
     #restricción tarifas por tipo de día
     @api.constrains('listado_tarifas')
     def _check_unique_dia_valido(self):
@@ -60,8 +71,9 @@ class WizardGenerateSessions(models.TransientModel):
             if not valor_default:
                 raise UserError("Para evitar fallos de generación de sesiones, asigna al menos una tarifa con el valor -1")
     
-       
+    #función generar sesiones
     def generate_sessions(self):
+        #asegura que hay un registro sólo, comprueba y lanza user errors
         self.ensure_one()
         if not self.fecha_inicio or not self.fecha_final:
             raise UserError("Debes definir una fecha de inicio y una fecha de fin para la generación de sesiones.")
@@ -75,7 +87,7 @@ class WizardGenerateSessions(models.TransientModel):
             raise UserError("Debes seleccionar al menos una sala para la generación de sesiones.")
         if not self.listado_tarifas:
             raise UserError("Debes seleccionar al menos una tarifa válida para proceder con la generación de sesiones.")
-        
+        #datos para la generación (generales)
         hora_inicio = int(self.hora_inicio)
         minuto_inicio= int((self.hora_inicio- hora_inicio)*60)
 
@@ -96,12 +108,13 @@ class WizardGenerateSessions(models.TransientModel):
                 if fecha_sesion_actual.hour < hora_inicio or fecha_sesion_actual.hour > hora_final:
                     fecha_sesion_actual = fecha_sesion_actual.replace(hour=hora_inicio, minute=minuto_inicio, second=0) + timedelta(days=1)
                     continue
-
+                
                 if not eventos_pendientes_ordenados:
                     eventos_pendientes_ordenados = list(eventos_ordenados)#reinicia lista
                 
                 evento = eventos_pendientes_ordenados.pop(0)
                 listado_anuncios_evento= []
+                #asignación de anuncios según género
                 for anuncio in self.listado_anuncios:
                     if listado_anuncios_evento and sum(anuncio.duracion for anuncio in listado_anuncios_evento) < maximo_tiempo_anuncios:
                         continue
@@ -110,12 +123,12 @@ class WizardGenerateSessions(models.TransientModel):
                     elif anuncio.genero_id in evento.generos_ids:
                         if anuncio.pegi <= evento.pegi:
                             listado_anuncios_evento.append(anuncio)
-
+                #datos para la sesión por evento
                 duracion_anuncios = sum(anuncio.duracion for anuncio in listado_anuncios_evento)
                 duracion = evento.duracion + duracion_anuncios
                 tarifa = self.obtener_tarifa(fecha_sesion_actual)
                 fecha_fin = fecha_sesion_actual + timedelta(minutes=duracion)
-                
+                #evitar sobreponer sesiones
                 sesion_existente = self.env['cine_gestion.sesion'].search([
                     ('sala_id', '=', sala.id),
                     ('fecha_inicio', '<', fecha_fin),
@@ -126,6 +139,7 @@ class WizardGenerateSessions(models.TransientModel):
                     ('fecha_inicio', '=', fecha_sesion_actual),
                     ('fecha_fin', '=', fecha_fin),
                 ])
+                #crear el registro con los campos de datos para la sesión y las fechas
                 if len(sesion_existente) == 0 and not sesion_solapada:
                     self.env['cine_gestion.sesion'].create({
                         'fecha_inicio': fecha_sesion_actual,
@@ -135,8 +149,10 @@ class WizardGenerateSessions(models.TransientModel):
                         'sala_id': sala.id,
                         'tarifa_id': tarifa
                     })
+                #cambiamos la hora
                 fecha_sesion_actual += timedelta(minutes=duracion+20)
 
+    #función para obtener la tarifa que hemos de asignar a la sesión según la fecha
     def obtener_tarifa(self, fecha_sesion):
         dia_tarifa = fecha_sesion.weekday()
 

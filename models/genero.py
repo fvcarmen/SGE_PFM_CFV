@@ -7,19 +7,19 @@ class Genero(models.Model):
     name = fields.Char(string="Nombre", required=True)  
     preferencia_horaria_inicio = fields.Datetime(string="Inicio preferencia horaria")
     preferencia_horaria_fin = fields.Datetime(string="Fin preferencia horaria")
-    anuncios_ids = fields.One2many('cine_gestion.anuncio', 'genero_id', string="Anuncio")
+
+    anuncios_ids = fields.One2many(
+        'cine_gestion.anuncio',
+        'genero_id',
+        string="Anuncio"
+        )
+    
     eventos_ids = fields.Many2many(
         'cine_gestion.evento',
         string="Evento",
     )
-
+    
+    #nombre de género único
     _sql_constraints = [
         ('unique_name','unique(name)','El nombre del género debe ser único.')
     ]
-    
-    """@api.constrains('name')
-    def _check_name(self):
-        for record in self:
-            if self.search([('name','=',record.name), ('id', '!=', record.id)]):
-            raise ValidationError("El nombre del género debe ser único.")
-    """
