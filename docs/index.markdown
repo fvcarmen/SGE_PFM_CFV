@@ -94,6 +94,89 @@ Este módulo gestiona todos los eventos y películas del cine, incluyendo la pro
     
     Generar según la cantidad de ocupación de una sesión / una película concreta / uso de descuentos / géneros ... informes para mejorar la programación automática y tener datos de las películas.
     
+# Instalación y Configuración de Módulos
+
+## URL repositorio: 
+   - **Cine Gestion**: [https://github.com/fvcarmen/SGE_PFM_CFV/](https://github.com/fvcarmen/SGE_PFM_CFV/)
+## Orden de instalación
+- Módulo `mail´ requerido para el uso de cron en el módulo principal
+- Módulo `cine_gestion´
+## Roles
+- **Administrador**:  
+  - **Usuario**: `fverducarmen@gmail.com`
+  - **Contraseña**: `admin`
+  
+- **Usuario**:
+  - **Usuario**: `10001134
+  - **Contraseña**: `1234`
+
+## Datos de Autenticación del Administrador
+- **URL del Servidor Odoo**: [http://localhost:8069](http://localhost:8069)
+- **Usuario Admin**: `fverducarmen@gmail.com`
+- **Contraseña Admin**: `admin`
+
+## Dependencias del Módulo
+
+Este módulo depende del siguiente módulo:
+
+### Módulo Dependiente
+- **Módulo**: `mail`
+
+#### Modelos Dependientes:
+1. `mail.message`
+   - Este modelo almacena los mensajes generados por el cron, como notificaciones o alertas.
+
+2. `mail.thread`
+   - Este modelo permite asociar el cron a registros específicos para el registro de mensajes relacionados con las tareas automatizadas.
+
+3. `mail.activity`
+   - Este modelo gestiona las actividades, como tareas o recordatorios, que se generan a través de los cron jobs. Están asociadas a los registros y ayudan a dar seguimiento a las acciones automáticas programadas.
+
+## Servicios Externos
+
+### URL del Fork de OdooDock
+   - **OdooDock Fork**: [https://github.com/tuusuario/odoodock-fork](https://github.com/tuusuario/odoodock-fork) 
+
+# Instalación del módulo
+
+### Acceder al servidor de odoo (up.sh)
+### Crear o abrir la carpeta extra-addons, revisar que estés en la ruta indicada con cd para:
+*   Copiar el módulo con git clone y la url del repositorio 
+
+### Revisar que esté dentro de addons_path la ruta correcta
+
+*   addons_path = /mnt/extra-addons
+
+### Acceder a la interfaz de configuración
+
+1. Iniciar sesión con:
+
+*   Usuario: 10001134 // fverducarmen@gmail.com
+*   Contraseña: 1234 // admin
+
+2.  Dirigirse al menú Aplicaciones y buscar el módulo Cine Gestion
+
+*   Instalar el módulo ‘mail’ 
+*   Instalar el módulo ‘cine_gestion’
+
+
+# Vistas Módulo
+
+### Sesiones
+![MenuInfraestructura](img/panel_menu_infraestructura.png)
+![VistaWizard](img/vista_wizard.png)
+![GenerarInformeSesiones](img/generar_informe_sesiones.png)
+![VistaCalendario](img/vista_calendario.png)
+
+### Formulario
+![InformeSesiones](img/informe_sesiones.png)
+
+### Eventos
+![VistaEventos](img/vista_eventos_filtrado.png)
+
+### Salas
+![VistaSalas](img/vista_form_sala.png)
+
 
 ### Mapa del módulo
 ![MapaModulo](img/mapa_modulo.png)
