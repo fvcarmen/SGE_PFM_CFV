@@ -15,7 +15,7 @@ class WizardGenerateSessions(models.TransientModel):
     listado_eventos = fields.Many2many(
         'cine_gestion.evento',
         string='Eventos',
-        domain="[('activo','=', True)]",
+        domain="[('activo','=', True), ('tiene_kdm_activo','=', True)]",
     )
     listado_anuncios = fields.Many2many(
         'cine_gestion.anuncio',
@@ -71,6 +71,10 @@ class WizardGenerateSessions(models.TransientModel):
             raise UserError("La hora de inicio debe ser anterior a la hora de fin para la generación de sesiones.")
         if not self.listado_eventos or self.minimo_eventos > len(self.listado_eventos): 
             raise UserError(f"Debes seleccionar al menos {self.minimo_eventos} evento/s para la generación de sesiones.")
+        for evento in self.listado_eventos:
+            kdm_validos = evento.kdms_ids.filtered(lambda kdm: kdm.vencimiento >= self.fecha_inicio and kdm.vencimiento <= self.fecha_final)
+            if not kdm_validos:
+                raise UserWarning(f"El evento {evento.name} no tendrá una kdm válida en las fechas seleccionadas.")
         if not self.listado_salas:
             raise UserError("Debes seleccionar al menos una sala para la generación de sesiones.")
         if not self.listado_tarifas:
@@ -84,22 +88,27 @@ class WizardGenerateSessions(models.TransientModel):
 
         fecha_final_generacion = datetime.combine(self.fecha_final, time(hora_final, minuto_final))
         fecha_sesion = datetime.combine(self.fecha_inicio, time(hora_inicio, minuto_inicio))
+
         eventos_ordenados = sorted(self.listado_eventos, key=lambda evento: int(evento.prioridad), reverse=True)
         eventos_pendientes_ordenados = list(eventos_ordenados)
+
         salas_ordenadas = sorted(self.listado_salas, key=lambda s: s.capacidad, reverse=True)
+        maximo_tiempo_anuncios = 30
         for sala in salas_ordenadas:
             fecha_sesion_actual = fecha_sesion  #reinicia para cada sala
-            while fecha_sesion_actual <= fecha_final_generacion:
+            while fecha_sesion_actual < fecha_final_generacion:
                 if fecha_sesion_actual.hour < hora_inicio or fecha_sesion_actual.hour > hora_final:
                     fecha_sesion_actual = fecha_sesion_actual.replace(hour=hora_inicio, minute=minuto_inicio, second=0) + timedelta(days=1)
                     continue
 
                 if not eventos_pendientes_ordenados:
-                    eventos_pendientes_ordenados = list(self.listado_eventos)#reinicia lista
+                    eventos_pendientes_ordenados = list(eventos_ordenados)#reinicia lista
                 
                 evento = eventos_pendientes_ordenados.pop(0)
                 listado_anuncios_evento= []
                 for anuncio in self.listado_anuncios:
+                    if listado_anuncios_evento and sum(anuncio.duracion for anuncio in listado_anuncios_evento) < maximo_tiempo_anuncios:
+                        continue
                     if anuncio.genero_id.name == "Comercial":
                         listado_anuncios_evento.append(anuncio)
                     elif anuncio.genero_id in evento.generos_ids:
@@ -116,7 +125,7 @@ class WizardGenerateSessions(models.TransientModel):
                     ('fecha_inicio', '<', fecha_fin),
                     ('fecha_fin', '>', fecha_sesion_actual)
                 ])
-                sesion_solapada= self.env['cine_gestion.sesion'].search([
+                sesion_solapada = self.env['cine_gestion.sesion'].search([
                     ('evento_id', '=', evento.id),
                     ('fecha_inicio', '=', fecha_sesion_actual),
                     ('fecha_fin', '=', fecha_fin),
