@@ -28,7 +28,7 @@ class Sesion(models.Model):
         fecha_inicio = datetime.date(self.fecha_inicio)
         fecha_fin = datetime.date(self.fecha_fin)
         kdm_validos = self.kdms.filtered(
-            lambda kdm: kdm.vencimiento >= fecha_inicio and kdm.vencimiento <=fecha_fin
+            lambda kdm: kdm.vencimiento > fecha_fin
         )
         if not kdm_validos:
             self.estado_kdm = "Esta sesión no tiene un KDM válido"
