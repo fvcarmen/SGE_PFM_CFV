@@ -71,25 +71,6 @@ class WizardGenerateSessions(models.TransientModel):
             raise UserError("La hora de inicio debe ser anterior a la hora de fin para la generación de sesiones.")
         if not self.listado_eventos or self.minimo_eventos > len(self.listado_eventos): 
             raise UserError(f"Debes seleccionar al menos {self.minimo_eventos} evento/s para la generación de sesiones.")
-        
-        mensajes = []
-        for evento in self.listado_eventos:
-            kdm_validos = evento.kdms_ids.filtered(
-                lambda kdm: kdm.vencimiento >= self.fecha_inicio and kdm.vencimiento <= self.fecha_final
-            )
-            if not kdm_validos:
-                mensajes.append(f"El evento {evento.name} no tendrá una KDM válida.")
-        if mensajes:
-            self.env['bus.bus'].sendone(
-                (self.env.user.partner_id._name, self.env.user.partner_id.id),
-                {
-                    'type': 'simple_notification',
-                    'title': 'Aviso',
-                    'message': "\n".join(mensajes),
-                    'sticky': False,
-                }
-            )
-
         if not self.listado_salas:
             raise UserError("Debes seleccionar al menos una sala para la generación de sesiones.")
         if not self.listado_tarifas:

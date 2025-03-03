@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, date, datetime
 from odoo import api, models, fields
 class Sesion(models.Model):
     _name = "cine_gestion.sesion"
@@ -19,10 +19,21 @@ class Sesion(models.Model):
         required=True
         )
     tarifa_id = fields.Many2one('cine_gestion.tarifa', string="Tarifa")
-    #vista lista que aparezca ya agrupada por grupos (día y luego salas) 
-    #que muestre la hora fin, la duración, la ocupación y la tarifa (correo)
-    
-    #función para calcular la duración de la sesión
+    estado_kdm = fields.Char(string="Estado", compute="_compute_estado_kdm")
+    kdms = fields.One2many('cine_gestion.kdm', 'evento_id', string ="KDMS", related="evento_id.kdms_ids")
+
+    @api.depends('fecha_inicio', 'fecha_fin', 'kdms')
+    def _compute_estado_kdm(self):
+        self.ensure_one()
+        fecha_inicio = datetime.date(self.fecha_inicio)
+        fecha_fin = datetime.date(self.fecha_fin)
+        kdm_validos = self.kdms.filtered(
+            lambda kdm: kdm.vencimiento >= fecha_inicio and kdm.vencimiento <=fecha_fin
+        )
+        if not kdm_validos:
+            self.estado_kdm = "Esta sesión no tiene un KDM válido"
+        else:
+            self.estado_kdm=""
     @api.depends('anuncios_ids', 'evento_id')
     def _compute_duracion(self):
         for sesion in self:
